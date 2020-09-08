@@ -1,0 +1,4 @@
+export const SET_GAME_SETTINGS = "SET_GAME_SETTINGS";
+export const SET_GAME_ROUNDS = "SET_GAME_ROUNDS";
+export const GAME_SET_OVER = "GAME_SET_OVER";
+export const CLEAR_GAME_SET_OVER = "CLEAR_GAME_SET_OVER";
