@@ -1,14 +1,24 @@
-import { SET_GAME_ROUNDS, GAME_SET_OVER, CLEAR_GAME_SET_OVER } from "./types";
+import {
+  SET_GAME_ROUNDS,
+  GAME_SET_OVER,
+  CLEAR_GAME_SET_OVER,
+  GAME_SAVE_SETS,
+  MATCH_OVER,
+} from "./types";
 
 export const setGameRounds = (round) => (dispatch) => {
-  console.log("ROUNDS", round);
-
+  console.log(round);
   dispatch({
     type: SET_GAME_ROUNDS,
     payload: round,
   });
 };
 export const gameSetOver = () => (dispatch) => {
+  dispatch({ type: GAME_SAVE_SETS });
   dispatch({ type: GAME_SET_OVER });
   dispatch({ type: CLEAR_GAME_SET_OVER });
+};
+export const gameOver = (team,set) => (dispatch) => {
+  console.log("GAME OVER, WON TEAM", team,set);
+  dispatch({ type: MATCH_OVER, payload: team });
 };
