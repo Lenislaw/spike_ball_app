@@ -2,14 +2,14 @@ import { SET_GAME_SETTINGS } from "../actions/types";
 
 const initialState = {
   teamOne: {
-    playerOne: { name: "Rudy", role: "server" },
-    playerTwo: { name: "Rudy2", role: "player" },
+    playerOne: { name: "Rudy", role: "server", id: 1 },
+    playerTwo: { name: "Rudy2", role: "player", id: 2 },
   },
   teamTwo: {
-    playerOne: { name: "Łysy", role: "player" },
-    playerTwo: { name: "Łysy2", role: "player" },
+    playerOne: { name: "Łysy", role: "player", id: 3 },
+    playerTwo: { name: "Łysy2", role: "player", id: 4 },
   },
-  maxPoints: 11,
+  maxPoints: 6,
   bestOf: 2,
   gameBegun: true,
 };
