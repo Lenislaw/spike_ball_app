@@ -4,3 +4,6 @@ export const GAME_SET_OVER = "GAME_SET_OVER";
 export const CLEAR_GAME_SET_OVER = "CLEAR_GAME_SET_OVER";
 export const GAME_SAVE_SETS = " GAME_SAVE_SETS";
 export const MATCH_OVER = "MATCH_OVER";
+export const CHANGE_GAME_SERVERS = "CHANGE_GAME_SERVERS";
+export const GAME_OVER = "GAME_OVER";
+export const NEW_GAME = "NEW_GAME";
