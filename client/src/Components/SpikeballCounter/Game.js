@@ -12,24 +12,29 @@ const Game = ({
   gameSetOver,
   gameOver,
 }) => {
-  // Random who starts
-  const whoStarts = Math.random() >= 0.5; // %50 probability of get "true"
-
   // ballPossession state
   const [ballPossession, setBallPossesion] = useState({
-    teamOne: whoStarts,
-    teamTwo: !whoStarts,
+    teamOne: true,
+    teamTwo: false,
   });
 
   // who serv in team one state
   const [serverTeamOne, setServerTeamOne] = useState({
-    playerOne: true,
-    playerTwo: false,
+    playerOne: ballPossession.teamOne
+      ? teamOne.playerOne.server
+      : !teamOne.playerOne.server,
+    playerTwo: ballPossession.teamOne
+      ? teamOne.playerTwo.server
+      : !teamOne.playerTwo.server,
   });
   // who serv in team two state
   const [serverTeamTwo, setServerTeamTwo] = useState({
-    playerOne: false,
-    playerTwo: true,
+    playerOne: ballPossession.teamTwo
+      ? teamTwo.playerOne.server
+      : !teamTwo.playerOne.server,
+    playerTwo: ballPossession.teamTwo
+      ? teamTwo.playerTwo.server
+      : !teamTwo.playerTwo.server,
   });
   // who get point
   const [getPoint, setGetPoint] = useState({
@@ -64,7 +69,7 @@ const Game = ({
 
   const onClick = (e) => {
     if (ballPossession.teamOne) {
-      if (e.target.value === "teamone") {
+      if (e.target.getAttribute("data-team") === "teamone") {
         const whoGetPointId = parseInt(
           e.target.getAttribute("data-player"),
           10
@@ -99,7 +104,7 @@ const Game = ({
         });
       }
     } else if (ballPossession.teamTwo) {
-      if (e.target.value === "teamtwo") {
+      if (e.target.getAttribute("data-team") === "teamtwo") {
         const whoGetPointId = parseInt(
           e.target.getAttribute("data-player"),
           10
@@ -175,6 +180,7 @@ const Game = ({
       }
     }
   };
+
   const setOver = (team) => {
     if (team === "one") {
       setSet({ ...set, teamOneSet: set.teamOneSet + 1 });
@@ -185,6 +191,7 @@ const Game = ({
       setPoints({ teamOnePoints: 0, teamTwoPoints: 0 });
     }
     setSetCounter(++setCount);
+
     gameSetOver();
   };
 
@@ -212,14 +219,14 @@ const Game = ({
       points.teamTwoPoints - 2 >= points.teamOnePoints &&
       setOver("two");
   }, [points]);
+
   useEffect(() => {
+    console.log("SET", typeof set.teamOneSet);
+    console.log(typeof bestof);
     bestOf === set.teamOneSet && gameOver("one", set);
     bestOf === set.teamTwoSet && gameOver("two", set);
   }, [set]);
-  useEffect(() => {
-    if (ballPossession.teamOne) alert(ballPossession.teamOne);
-    if (ballPossession.teamTwo) alert(ballPossession.teamTwo);
-  }, []);
+
   return (
     <div className="game">
       <div className="points">
@@ -269,36 +276,48 @@ const Game = ({
       <div className="controllers">
         <button
           onClick={onClick}
-          value="teamone"
           data-player={teamOne.playerOne.id}
+          data-team="teamone"
         >
           {teamOne.playerOne.name}
+          {serverTeamOne.playerOne && ballPossession.teamOne && (
+            <i data-team="teamone" className="fas fa-volleyball-ball"></i>
+          )}
         </button>
         <button
           onClick={onClick}
-          value="teamone"
           data-player={teamOne.playerTwo.id}
+          data-team="teamone"
         >
-          {teamOne.playerTwo.name}
+          {teamOne.playerTwo.name}{" "}
+          {serverTeamOne.playerTwo && ballPossession.teamOne && (
+            <i data-team="teamone" className="fas fa-volleyball-ball"></i>
+          )}
         </button>
-        <button onClick={onClick} value="teamone">
+        <button onClick={onClick} data-team="teamone">
           After Faul
         </button>
         <button
           onClick={onClick}
-          value="teamtwo"
           data-player={teamTwo.playerOne.id}
+          data-team="teamtwo"
         >
-          {teamTwo.playerOne.name}
+          {teamTwo.playerOne.name}{" "}
+          {serverTeamTwo.playerOne && ballPossession.teamTwo && (
+            <i data-team="teamtwo" className="fas fa-volleyball-ball"></i>
+          )}
         </button>
         <button
           onClick={onClick}
-          value="teamtwo"
           data-player={teamTwo.playerTwo.id}
+          data-team="teamtwo"
         >
-          {teamTwo.playerTwo.name}
+          {teamTwo.playerTwo.name}{" "}
+          {serverTeamTwo.playerTwo && ballPossession.teamTwo && (
+            <i data-team="teamtwo" className="fas fa-volleyball-ball"></i>
+          )}
         </button>
-        <button onClick={onClick} value="teamtwo">
+        <button onClick={onClick} data-team="teamtwo">
           After Faul
         </button>
       </div>
@@ -316,5 +335,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   setGameRounds,
   gameSetOver,
+
   gameOver,
 })(Game);
