@@ -222,9 +222,9 @@ const Game = ({
 
   useEffect(() => {
     console.log("SET", typeof set.teamOneSet);
-    console.log(typeof bestof);
-    bestOf === set.teamOneSet && gameOver("one", set);
-    bestOf === set.teamTwoSet && gameOver("two", set);
+    console.log(typeof bestOf);
+    parseInt(bestOf, 10) === set.teamOneSet && gameOver("one", set);
+    parseInt(bestOf, 10) === set.teamTwoSet && gameOver("two", set);
   }, [set]);
 
   return (
