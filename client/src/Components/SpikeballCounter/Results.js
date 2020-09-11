@@ -2,8 +2,9 @@ import React, { Fragment } from "react";
 import { connect } from "react-redux";
 import Action from "./Action";
 import SetPointsTotal from "./SetPointsTotal";
+import { newGame } from "../../actions/gameSettings";
 
-const Results = ({ results }) => {
+const Results = ({ results, newGame }) => {
   const setOne = results[0];
   const setTwo = results[1];
   const setThree = results[2];
@@ -12,8 +13,17 @@ const Results = ({ results }) => {
   const setSix = results[5];
   const setSeven = results[6];
 
+  const startNewGame = () => {
+    newGame();
+  };
+
   return (
     <div>
+      <div className="button new-game">
+        <button className="button new-game-btn" onClick={startNewGame}>
+          New Game
+        </button>
+      </div>
       <div className="set">
         <h3>Set One</h3>
         <div className="set-points">
@@ -48,7 +58,6 @@ const Results = ({ results }) => {
         <div className="set">
           <h3>Set Three</h3>
           <div className="set-points">
-            
             {setThree.map((action, index) => (
               <Action
                 key={`${index}-setThree`}
@@ -168,4 +177,4 @@ const mapStateToProps = (state) => ({
   results: state.game.gameSaveSets,
 });
 
-export default connect(mapStateToProps, {})(Results);
+export default connect(mapStateToProps, { newGame })(Results);
