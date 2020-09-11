@@ -3,7 +3,8 @@ import {
   CLEAR_GAME_SET_OVER,
   GAME_SET_OVER,
   GAME_SAVE_SETS,
-  MATCH_OVER,
+  GAME_OVER,
+  NEW_GAME,
 } from "../actions/types";
 
 const initialState = {
@@ -43,7 +44,8 @@ export default function (state = initialState, action) {
         ...state,
         gameSetOver: false,
       };
-    case MATCH_OVER:
+
+    case GAME_OVER:
       let winner = {};
       if (payload === "one") {
         winner = { teamOne: true, teamTwo: false };
@@ -57,7 +59,17 @@ export default function (state = initialState, action) {
         matchOver: true,
         won: winner,
       };
-
+    case NEW_GAME:
+      return {
+        gameRounds: [],
+        gameSetOver: false,
+        gameSaveSets: [],
+        matchOver: false,
+        won: {
+          teamOne: false,
+          teamTwo: false,
+        },
+      };
     default:
       return state;
   }
