@@ -67,7 +67,15 @@ const Options = ({ gameStart }) => {
     ) {
       console.log("Nicknames can't duplicate in this same Team!");
     } else {
-      gameStart(teamOne, teamTwo, maxPoints, ballServers, bestOf);
+      const ballPossessionFlip = Math.floor(Math.random() * 2) + 1;
+      gameStart(
+        teamOne,
+        teamTwo,
+        maxPoints,
+        ballServers,
+        bestOf,
+        ballPossessionFlip
+      );
     }
   };
 
