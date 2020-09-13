@@ -1,21 +1,34 @@
 import React, { useEffect, useState, Fragment } from "react";
 import { connect } from "react-redux";
-import { setGameRounds, gameSetOver, gameOver } from "../../actions/game";
+import {
+  setGameRounds,
+  gameSetOver,
+  gameOver,
+  saveSet,
+  ballPossessionUpdate,
+} from "../../actions/game";
+import ButtonPlayer from "./ButtonPlayer";
+import ButtonAfterFaul from "./ButtonAfterFaul";
 
 const Game = ({
   teamOne,
   teamTwo,
   maxPoints,
   bestOf,
+  ballPossessionFlip,
   gameRounds,
+  setNr,
   setGameRounds,
   gameSetOver,
+  saveSet,
   gameOver,
+
+  ballPossessionNew,
 }) => {
   // ballPossession state
-  const [ballPossession, setBallPossesion] = useState({
-    teamOne: true,
-    teamTwo: false,
+  const [ballPossession, setBallPossession] = useState({
+    teamOne: ballPossessionFlip.teamOne,
+    teamTwo: ballPossessionFlip.teamTwo,
   });
 
   // who serv in team one state
@@ -41,18 +54,30 @@ const Game = ({
     teamOne: false,
     teamTwo: false,
   });
-  //set points state
+  //set points total state
   const [points, setPoints] = useState({
     teamOnePoints: 0,
     teamTwoPoints: 0,
   });
+
   // each player points counter state
   const [teamOnePlayersPoints, setTeamOnePlayersPoints] = useState({
     playerOne: 0,
     playerTwo: 0,
     afterEnemyTeamFaul: 0,
   });
+  // each player points counter state
+  const [teamOnePlayersPointsPerSet, setTeamOnePlayersPointsPerSet] = useState({
+    playerOne: 0,
+    playerTwo: 0,
+    afterEnemyTeamFaul: 0,
+  });
   const [teamTwoPlayersPoints, setTeamTwoPlayersPoints] = useState({
+    playerOne: 0,
+    playerTwo: 0,
+    afterEnemyTeamFaul: 0,
+  });
+  const [teamTwoPlayersPointsPerSet, setTeamTwoPlayersPointsPerSet] = useState({
     playerOne: 0,
     playerTwo: 0,
     afterEnemyTeamFaul: 0,
@@ -67,6 +92,9 @@ const Game = ({
     teamTwoSet: 0,
   });
 
+  // set Change servers state
+  const [changeBox, setChangeBox] = useState(false);
+
   const onClick = (e) => {
     if (ballPossession.teamOne) {
       if (e.target.getAttribute("data-team") === "teamone") {
@@ -74,6 +102,7 @@ const Game = ({
           e.target.getAttribute("data-player"),
           10
         );
+
         setGetPoint({
           teamOne: true,
           teamTwo: false,
@@ -83,7 +112,7 @@ const Game = ({
 
         setPoints({ ...points, teamOnePoints: ++points.teamOnePoints });
       } else {
-        setBallPossesion({
+        setBallPossession({
           teamOne: false,
           teamTwo: true,
         });
@@ -117,7 +146,7 @@ const Game = ({
           teamTwo: true,
         });
       } else {
-        setBallPossesion({
+        setBallPossession({
           teamOne: true,
           teamTwo: false,
         });
@@ -146,11 +175,19 @@ const Game = ({
           ...teamOnePlayersPoints,
           playerOne: teamOnePlayersPoints.playerOne + 1,
         });
+        setTeamOnePlayersPointsPerSet({
+          ...teamOnePlayersPointsPerSet,
+          playerOne: teamOnePlayersPointsPerSet.playerOne + 1,
+        });
       }
       if (whoGetPoint === 2) {
         setTeamOnePlayersPoints({
           ...teamOnePlayersPoints,
           playerTwo: teamOnePlayersPoints.playerTwo + 1,
+        });
+        setTeamOnePlayersPointsPerSet({
+          ...teamOnePlayersPointsPerSet,
+          playerTwo: teamOnePlayersPointsPerSet.playerTwo + 1,
         });
       }
       if (!whoGetPoint) {
@@ -158,10 +195,18 @@ const Game = ({
           ...teamOnePlayersPoints,
           afterEnemyTeamFaul: teamOnePlayersPoints.afterEnemyTeamFaul + 1,
         });
+        setTeamOnePlayersPointsPerSet({
+          ...teamOnePlayersPointsPerSet,
+          afterEnemyTeamFaul: teamOnePlayersPointsPerSet.afterEnemyTeamFaul + 1,
+        });
       }
     } else {
       if (whoGetPoint === 3) {
         setTeamTwoPlayersPoints({
+          ...teamTwoPlayersPoints,
+          playerOne: teamTwoPlayersPoints.playerOne + 1,
+        });
+        setTeamTwoPlayersPointsPerSet({
           ...teamTwoPlayersPoints,
           playerOne: teamTwoPlayersPoints.playerOne + 1,
         });
@@ -171,9 +216,17 @@ const Game = ({
           ...teamTwoPlayersPoints,
           playerTwo: teamTwoPlayersPoints.playerTwo + 1,
         });
+        setTeamTwoPlayersPointsPerSet({
+          ...teamTwoPlayersPoints,
+          playerTwo: teamTwoPlayersPoints.playerTwo + 1,
+        });
       }
       if (!whoGetPoint) {
         setTeamTwoPlayersPoints({
+          ...teamTwoPlayersPoints,
+          afterEnemyTeamFaul: teamTwoPlayersPoints.afterEnemyTeamFaul + 1,
+        });
+        setTeamTwoPlayersPointsPerSet({
           ...teamTwoPlayersPoints,
           afterEnemyTeamFaul: teamTwoPlayersPoints.afterEnemyTeamFaul + 1,
         });
@@ -185,13 +238,33 @@ const Game = ({
     if (team === "one") {
       setSet({ ...set, teamOneSet: set.teamOneSet + 1 });
       setPoints({ teamOnePoints: 0, teamTwoPoints: 0 });
+      setTeamOnePlayersPointsPerSet({
+        playerOne: 0,
+        playerTwo: 0,
+        afterEnemyTeamFaul: 0,
+      });
+      setTeamTwoPlayersPoints({
+        playerOne: 0,
+        playerTwo: 0,
+        afterEnemyTeamFaul: 0,
+      });
     }
     if (team === "two") {
       setSet({ ...set, teamTwoSet: set.teamTwoSet + 1 });
       setPoints({ teamOnePoints: 0, teamTwoPoints: 0 });
+      setTeamOnePlayersPointsPerSet({
+        playerOne: 0,
+        playerTwo: 0,
+        afterEnemyTeamFaul: 0,
+      });
+      setTeamTwoPlayersPoints({
+        playerOne: 0,
+        playerTwo: 0,
+        afterEnemyTeamFaul: 0,
+      });
     }
-    setSetCounter(++setCount);
 
+    saveSet(setNr);
     gameSetOver();
   };
 
@@ -207,6 +280,8 @@ const Game = ({
       getPoint,
       teamOnePlayersPoints,
       teamTwoPlayersPoints,
+      teamOnePlayersPointsPerSet,
+      teamTwoPlayersPointsPerSet,
       setCount,
     };
     setGameRounds(round);
@@ -221,13 +296,190 @@ const Game = ({
   }, [points]);
 
   useEffect(() => {
-    console.log("SET", typeof set.teamOneSet);
-    console.log(typeof bestOf);
     parseInt(bestOf, 10) === set.teamOneSet && gameOver("one", set);
     parseInt(bestOf, 10) === set.teamTwoSet && gameOver("two", set);
-  }, [set]);
+    if (setNr > 1) {
+      setSetCounter(++setCount);
+      console.log(setNr);
+      console.log("BALLPOSS", ballPossessionNew);
+      if (setNr % 2 === 0) {
+        setBallPossession({
+          teamOne: !ballPossessionFlip.teamOne,
+          teamTwo: !ballPossessionFlip.teamTwo,
+        });
+      } else {
+        setBallPossession({
+          teamOne: ballPossessionFlip.teamOne,
+          teamTwo: ballPossessionFlip.teamTwo,
+        });
+      }
 
-  return (
+      setChangeBox(true);
+    }
+  }, [set]);
+  useEffect(() => {
+    const round = {
+      teamOne,
+      teamTwo,
+      ballPossession,
+      serverTeamOne,
+      serverTeamTwo,
+      points,
+      set,
+      getPoint,
+      teamOnePlayersPoints,
+      teamTwoPlayersPoints,
+      setCount,
+    };
+    setNr > 1 && setGameRounds(round, true);
+  }, [setNr]);
+
+  // Change Server Box
+  useEffect(() => {
+    changeBox &&
+      setServerTeamOne({
+        playerOne: ballPossession.teamOne
+          ? teamOne.playerOne.server
+          : !teamOne.playerOne.server,
+        playerTwo: ballPossession.teamOne
+          ? teamOne.playerTwo.server
+          : !teamOne.playerTwo.server,
+      });
+    changeBox &&
+      setServerTeamTwo({
+        playerOne: ballPossession.teamTwo
+          ? teamTwo.playerOne.server
+          : !teamTwo.playerOne.server,
+        playerTwo: ballPossession.teamTwo
+          ? teamTwo.playerTwo.server
+          : !teamTwo.playerTwo.server,
+      });
+  }, [changeBox]);
+
+  const teamOneServer = (e) => {
+    const teamOnePlayerOneServ = document.getElementById(
+      "server-teamOne-playerOne"
+    ).selected;
+    const teamOnePlayerTwoServ = document.getElementById(
+      "server-teamOne-playerTwo"
+    ).selected;
+    setServerTeamOne({
+      playerOne: ballPossession.teamOne
+        ? teamOnePlayerOneServ
+          ? true
+          : false
+        : !teamOnePlayerOneServ
+        ? true
+        : false,
+      playerTwo: ballPossession.teamOne
+        ? teamOnePlayerTwoServ
+          ? true
+          : false
+        : !teamOnePlayerTwoServ
+        ? true
+        : false,
+    });
+  };
+
+  const teamTwoServer = (e) => {
+    const teamTwoPlayerOneServ = document.getElementById(
+      "server-teamTwo-playerOne"
+    ).selected;
+    const teamTwoPlayerTwoServ = document.getElementById(
+      "server-teamTwo-playerTwo"
+    ).selected;
+    setServerTeamTwo({
+      playerOne: ballPossession.teamTwo
+        ? teamTwoPlayerOneServ
+          ? true
+          : false
+        : !teamTwoPlayerOneServ
+        ? true
+        : false,
+      playerTwo: ballPossession.teamTwo
+        ? teamTwoPlayerTwoServ
+          ? true
+          : false
+        : !teamTwoPlayerTwoServ
+        ? true
+        : false,
+    });
+  };
+
+  const [serverTeamOneCheckbox, setServerTeamOneCheckbox] = useState(true);
+  const [serverTeamTwoCheckbox, setServerTeamTwoCheckbox] = useState(true);
+
+  const onChangeTeamOne = (e) => {
+    setServerTeamOneCheckbox(!serverTeamOneCheckbox);
+    teamOneServer();
+  };
+
+  const onChangeTeamTwo = () => {
+    setServerTeamTwoCheckbox(!serverTeamTwoCheckbox);
+    teamTwoServer();
+  };
+  const closeBox = () => {
+    setChangeBox(false);
+  };
+
+  return changeBox ? (
+    <div className="change-servers">
+      <div className="team-one">
+        <h3>Team One</h3>
+        <div className="inputs">
+          <div className="select">
+            <h3>Select first server in next set!</h3>
+            <select
+              name="select-server-team-one"
+              id="select-server-team-one"
+              onChange={onChangeTeamOne}
+            >
+              <option
+                id="server-teamOne-playerOne"
+                value={teamOne.playerOne.name}
+              >
+                {teamOne.playerOne.name}
+              </option>
+              <option
+                id="server-teamOne-playerTwo"
+                value={teamOne.playerTwo.name}
+              >
+                {teamOne.playerTwo.name}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div className="team-two">
+        <h3>Team Two</h3>
+        <div className="inputs">
+          <div className="select">
+            <select
+              name="select-server-team-two"
+              id="select-server-team-two"
+              onChange={onChangeTeamTwo}
+            >
+              <option
+                id="server-teamTwo-playerOne"
+                value={teamTwo.playerOne.name}
+              >
+                {teamTwo.playerOne.name}
+              </option>
+              <option
+                id="server-teamTwo-playerTwo"
+                value={teamTwo.playerTwo.name}
+              >
+                {teamTwo.playerTwo.name}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div className="button">
+        <button onClick={closeBox}>Close</button>
+      </div>
+    </div>
+  ) : (
     <div className="game">
       <div className="points">
         <div className="teamOne">
@@ -274,52 +526,43 @@ const Game = ({
         </div>
       </div>
       <div className="controllers">
-        <button
+        <ButtonPlayer
           onClick={onClick}
-          data-player={teamOne.playerOne.id}
-          data-team="teamone"
-        >
-          {teamOne.playerOne.name}
-          {serverTeamOne.playerOne && ballPossession.teamOne && (
-            <i data-team="teamone" className="fas fa-volleyball-ball"></i>
-          )}
-        </button>
-        <button
+          dataPlayer={teamOne.playerOne.id}
+          dataTeam={"teamone"}
+          playerName={teamOne.playerOne.name}
+          server={serverTeamOne.playerOne}
+          ballPossesion={ballPossession.teamOne}
+        />
+        <ButtonPlayer
           onClick={onClick}
-          data-player={teamOne.playerTwo.id}
-          data-team="teamone"
-        >
-          {teamOne.playerTwo.name}{" "}
-          {serverTeamOne.playerTwo && ballPossession.teamOne && (
-            <i data-team="teamone" className="fas fa-volleyball-ball"></i>
-          )}
-        </button>
-        <button onClick={onClick} data-team="teamone">
-          After Faul
-        </button>
-        <button
+          dataPlayer={teamOne.playerTwo.id}
+          dataTeam={"teamone"}
+          playerName={teamOne.playerTwo.name}
+          server={serverTeamOne.playerTwo}
+          ballPossesion={ballPossession.teamOne}
+        />
+
+        <ButtonAfterFaul onClick={onClick} dataTeam={"teamone"} />
+
+        <ButtonPlayer
           onClick={onClick}
-          data-player={teamTwo.playerOne.id}
-          data-team="teamtwo"
-        >
-          {teamTwo.playerOne.name}{" "}
-          {serverTeamTwo.playerOne && ballPossession.teamTwo && (
-            <i data-team="teamtwo" className="fas fa-volleyball-ball"></i>
-          )}
-        </button>
-        <button
+          dataPlayer={teamTwo.playerOne.id}
+          dataTeam={"teamtwo"}
+          playerName={teamTwo.playerOne.name}
+          server={serverTeamTwo.playerOne}
+          ballPossesion={ballPossession.teamTwo}
+        />
+        <ButtonPlayer
           onClick={onClick}
-          data-player={teamTwo.playerTwo.id}
-          data-team="teamtwo"
-        >
-          {teamTwo.playerTwo.name}{" "}
-          {serverTeamTwo.playerTwo && ballPossession.teamTwo && (
-            <i data-team="teamtwo" className="fas fa-volleyball-ball"></i>
-          )}
-        </button>
-        <button onClick={onClick} data-team="teamtwo">
-          After Faul
-        </button>
+          dataPlayer={teamTwo.playerTwo.id}
+          dataTeam={"teamtwo"}
+          playerName={teamTwo.playerTwo.name}
+          server={serverTeamTwo.playerTwo}
+          ballPossesion={ballPossession.teamTwo}
+        />
+
+        <ButtonAfterFaul onClick={onClick} dataTeam={"teamtwo"} />
       </div>
     </div>
   );
@@ -329,12 +572,16 @@ const mapStateToProps = (state) => ({
   teamTwo: state.gameSettings.teamTwo,
   maxPoints: state.gameSettings.maxPoints,
   bestOf: state.gameSettings.bestOf,
+  ballPossessionFlip: state.gameSettings.ballPossessionFlip,
+  ballPossessionNew: state.game.ballPossession,
   gameRounds: state.game.gameRounds,
   gameSetOver: state.game.gameSetOver,
+  setNr: state.game.setNr,
 });
 export default connect(mapStateToProps, {
   setGameRounds,
   gameSetOver,
-
+  saveSet,
   gameOver,
+  ballPossessionUpdate,
 })(Game);
