@@ -1,16 +1,17 @@
-import { SET_GAME_SETTINGS, NEW_GAME } from "../actions/types";
+import { SET_GAME_SETTINGS, NEW_GAME, CHANGE_SETTINGS } from "../actions/types";
 
 const initialState = {
   teamOne: {
-    playerOne: { name: "1", server: true, id: 1 },
-    playerTwo: { name: "2", server: false, id: 2 },
+    playerOne: { name: "", server: null, id: 1 },
+    playerTwo: { name: "", server: null, id: 2 },
   },
   teamTwo: {
-    playerOne: { name: "3", server: true, id: 3 },
-    playerTwo: { name: "4", server: false, id: 4 },
+    playerOne: { name: "", server: null, id: 3 },
+    playerTwo: { name: "", server: null, id: 4 },
   },
   maxPoints: null,
   bestOf: null,
+  ballPossessionFlip: { teamOne: null, teamTwo: null },
   gameBegun: false,
 };
 
@@ -19,8 +20,22 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case SET_GAME_SETTINGS:
-      const { teamOne, teamTwo, maxPoints, ballServers, bestOf } = payload;
-      console.log(teamOne);
+      const {
+        teamOne,
+        teamTwo,
+        maxPoints,
+        ballServers,
+        bestOf,
+        ballPossessionFlip,
+      } = payload;
+      let ballFor = {};
+      console.log(ballPossessionFlip);
+      if (ballPossessionFlip === 1) {
+        ballFor = { teamOne: true, teamTwo: false };
+      } else {
+        ballFor = { teamOne: false, teamTwo: true };
+      }
+      console.log(ballFor);
       return {
         ...state,
         teamOne: {
@@ -49,8 +64,10 @@ export default function (state = initialState, action) {
         },
         bestOf: bestOf,
         maxPoints: maxPoints,
+        ballPossessionFlip: ballFor,
         gameBegun: true,
       };
+
     case NEW_GAME:
       return {
         ...state,
