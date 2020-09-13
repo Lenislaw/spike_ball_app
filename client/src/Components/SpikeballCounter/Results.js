@@ -4,15 +4,20 @@ import Action from "./Action";
 import SetPointsTotal from "./SetPointsTotal";
 import { newGame } from "../../actions/gameSettings";
 
-const Results = ({ results, newGame }) => {
-  const setOne = results[0];
-  const setTwo = results[1];
-  const setThree = results[2];
-  const setFour = results[3];
-  const setFive = results[4];
-  const setSix = results[5];
-  const setSeven = results[6];
-
+const Results = ({
+  results,
+  newGame,
+  setOne,
+  setTwo,
+  setThree,
+  setFour,
+  setFive,
+  setSix,
+  setSeven,
+  gameStats,
+  won,
+}) => {
+  console.log("SET ONE RESULTS", setOne);
   const startNewGame = () => {
     newGame();
   };
@@ -24,20 +29,68 @@ const Results = ({ results, newGame }) => {
           New Game
         </button>
       </div>
-      <div className="set">
-        <h3>Set One</h3>
-        <div className="set-points">
-          {setOne.map((action, index) => (
-            <Action
-              key={`${index}-setOne`}
-              action={action}
-              index={index}
-              length={setOne.length}
-            />
-          ))}
-          <SetPointsTotal set={setOne} />
+      <div className="results-game">
+        <div className="sets">
+          <div className="sets-team-one">
+            <div className="team">
+              TeamOne:
+              {won.teamOne
+                ? gameStats.set.teamOneSet + 1
+                : gameStats.set.teamOneSet}
+            </div>
+            <div className="playerOne">
+              {gameStats.teamOne.playerOne.name} Points:{" "}
+              {gameStats.teamOnePlayersPoints.playerOne}
+            </div>
+            <div className="playerTwo">
+              {" "}
+              {gameStats.teamOne.playerTwo.name} Points:{" "}
+              {gameStats.teamOnePlayersPoints.playerTwo}
+            </div>
+            <div className="afterMistake">
+              Points after faul:{" "}
+              {gameStats.teamOnePlayersPoints.afterEnemyTeamFaul}
+            </div>
+          </div>
+          <div className="sets-team-one">
+            <div className="team">
+              TeamTwo:
+              {won.teamTwo
+                ? gameStats.set.teamTwoSet + 1
+                : gameStats.set.teamTwoSet}
+            </div>
+            <div className="playerOne">
+              {gameStats.teamTwo.playerOne.name} Points:{" "}
+              {gameStats.teamTwoPlayersPointsPerSet.playerOne}
+            </div>
+            <div className="playerTwo">
+              {" "}
+              {gameStats.teamTwo.playerTwo.name} Points:{" "}
+              {gameStats.teamTwoPlayersPointsPerSet.playerTwo}
+            </div>
+            <div className="afterMistake">
+              Points after faul:{" "}
+              {gameStats.teamTwoPlayersPoints.afterEnemyTeamFaul}
+            </div>
+          </div>
         </div>
       </div>
+      {setOne && (
+        <div className="set">
+          <h3>Set One</h3>
+          <div className="set-points">
+            {setOne.map((action, index) => (
+              <Action
+                key={`${index}-setOne`}
+                action={action}
+                index={index}
+                length={setOne.length}
+              />
+            ))}
+            <SetPointsTotal set={setOne} />
+          </div>
+        </div>
+      )}
       {setTwo && (
         <div className="set">
           <h3>Set Two</h3>
@@ -92,6 +145,7 @@ const Results = ({ results, newGame }) => {
                 length={setFour.length}
               />
             ))}
+            <SetPointsTotal set={setFour} />
           </div>
         </div>
       )}
@@ -117,6 +171,7 @@ const Results = ({ results, newGame }) => {
                 length={setFive.length}
               />
             ))}
+            <SetPointsTotal set={setFive} />
           </div>
         </div>
       )}
@@ -142,6 +197,7 @@ const Results = ({ results, newGame }) => {
                 length={setSix.length}
               />
             ))}
+            <SetPointsTotal set={setSix} />
           </div>
         </div>
       )}
@@ -167,6 +223,7 @@ const Results = ({ results, newGame }) => {
                 length={setSeven.length}
               />
             ))}
+            <SetPointsTotal set={setSeven} />
           </div>
         </div>
       )}
@@ -175,6 +232,15 @@ const Results = ({ results, newGame }) => {
 };
 const mapStateToProps = (state) => ({
   results: state.game.gameSaveSets,
+  setOne: state.game.setOne,
+  setTwo: state.game.setTwo,
+  setThree: state.game.setThree,
+  setFour: state.game.setFour,
+  setFive: state.game.setFive,
+  setSix: state.game.setSix,
+  setSeven: state.game.setSeven,
+  gameStats: state.game.gameStats,
+  won: state.game.won,
 });
 
 export default connect(mapStateToProps, { newGame })(Results);
