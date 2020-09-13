@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { gameStart } from "../../actions/gameSettings";
+import { gameStart } from "../../../actions/gameSettings";
 
 const Options = ({ gameStart }) => {
   const [maxPoints, setMaxPoints] = useState("11");

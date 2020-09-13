@@ -38,7 +38,7 @@ export const setGameRounds = (round, msg = false) => (dispatch) => {
   }
 };
 export const ballPossessionUpdate = (ballPossession) => (dispatch) => {
-  console.log(ballPossession);
+
   dispatch({ type: SET_BALL_POSSESSION, payload: ballPossession });
 };
 export const saveSet = (setNr) => (dispatch) => {

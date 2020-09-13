@@ -2,17 +2,17 @@ import { SET_GAME_SETTINGS, NEW_GAME, CHANGE_SETTINGS } from "../actions/types";
 
 const initialState = {
   teamOne: {
-    playerOne: { name: "", server: null, id: 1 },
-    playerTwo: { name: "", server: null, id: 2 },
+    playerOne: { name: "1", server:true, id: 1 },
+    playerTwo: { name: "2", server:false, id: 2 },
   },
   teamTwo: {
-    playerOne: { name: "", server: null, id: 3 },
-    playerTwo: { name: "", server: null, id: 4 },
+    playerOne: { name: "3", server: true, id: 3 },
+    playerTwo: { name: "4", server: false, id: 4 },
   },
-  maxPoints: null,
-  bestOf: null,
-  ballPossessionFlip: { teamOne: null, teamTwo: null },
-  gameBegun: false,
+  maxPoints: 3,
+  bestOf: 2,
+  ballPossessionFlip: { teamOne: true, teamTwo:false },
+  gameBegun: true,
 };
 
 export default function (state = initialState, action) {

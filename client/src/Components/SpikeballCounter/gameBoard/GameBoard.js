@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import Game from "./Game";
-import Results from "./Results";
+import Game from "./game/Game";
+import Results from "../gameBoard/results/Results";
 
 const GameBoard = ({ matchOver }) => {
   useEffect(() => {}, [matchOver]);

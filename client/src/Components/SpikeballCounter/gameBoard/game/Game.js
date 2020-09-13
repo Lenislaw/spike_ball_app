@@ -6,7 +6,7 @@ import {
   gameOver,
   saveSet,
   ballPossessionUpdate,
-} from "../../actions/game";
+} from "../../../../actions/game";
 import ButtonPlayer from "./ButtonPlayer";
 import ButtonAfterFaul from "./ButtonAfterFaul";
 
@@ -300,8 +300,7 @@ const Game = ({
     parseInt(bestOf, 10) === set.teamTwoSet && gameOver("two", set);
     if (setNr > 1) {
       setSetCounter(++setCount);
-      console.log(setNr);
-      console.log("BALLPOSS", ballPossessionNew);
+
       if (setNr % 2 === 0) {
         setBallPossession({
           teamOne: !ballPossessionFlip.teamOne,
