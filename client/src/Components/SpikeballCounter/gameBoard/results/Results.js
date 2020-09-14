@@ -58,12 +58,12 @@ const Results = ({
             </div>
             <div className="playerOne">
               {gameStats.teamTwo.playerOne.name} Points:{" "}
-              {gameStats.teamTwoPlayersPointsPerSet.playerOne}
+              {gameStats.teamTwoPlayersPoints.playerOne}
             </div>
             <div className="playerTwo">
               {" "}
               {gameStats.teamTwo.playerTwo.name} Points:{" "}
-              {gameStats.teamTwoPlayersPointsPerSet.playerTwo}
+              {gameStats.teamTwoPlayersPoints.playerTwo}
             </div>
             <div className="afterMistake">
               Points after faul:{" "}

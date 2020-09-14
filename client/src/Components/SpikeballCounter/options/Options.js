@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { gameStart } from "../../../actions/gameSettings";
+import { setAlert } from "../../../actions/alert";
+import Alert from "../../layout/Alert/Alert";
 
-const Options = ({ gameStart }) => {
+const Options = ({ gameStart, setAlert }) => {
   const [maxPoints, setMaxPoints] = useState("11");
   const [bestOf, setBestOf] = useState(1);
   const [teamOne, setTeamOne] = useState({
@@ -60,12 +62,20 @@ const Options = ({ gameStart }) => {
       teamTwoPlayerOne: teamTwoPlayerOneServer,
       teamTwoPlayerTwo: teamTwoPlayerTwoServer,
     };
-
     if (
+      teamOne.playerOne === "" ||
+      teamOne.playerTwo === "" ||
+      teamTwo.playerOne === "" ||
+      teamTwo.playerTwo === ""
+    ) {
+      setAlert("Each Player has to be named!");
+    }
+    else if (
       teamOne.playerOne === teamOne.playerTwo ||
       teamTwo.playerOne === teamTwo.playerTwo
     ) {
-      console.log("Nicknames can't duplicate in this same Team!");
+      console.log("ELO");
+      setAlert("Players in each team must have unique names!");
     } else {
       const ballPossessionFlip = Math.floor(Math.random() * 2) + 1;
       gameStart(
@@ -80,98 +90,141 @@ const Options = ({ gameStart }) => {
   };
 
   return (
-    <div className="options">
-      <div className="options-select">
-        <div className="options-select-max-points">
-          <label htmlFor="max-points">Choose a max points per set:</label>
-          <select
-            name="max-points"
-            id="max-points"
-            onChange={onChangeMaxPoints}
-          >
-            <option value="11">11</option>
-            <option value="15">15</option>
-            <option value="21">21</option>
-          </select>
+    <div className="spikeball-counter-options">
+      <form className="form">
+        <div className="options-select">
+          <div className="options-select-max-points">
+            <label htmlFor="max-points-lebel">
+              Choose a max points per set:
+            </label>
+            <select
+              className="max-points-select"
+              name="max-points"
+              id="max-points"
+              onChange={onChangeMaxPoints}
+            >
+              <option className="option" value="11">
+                11
+              </option>
+              <option className="option" value="15">
+                15
+              </option>
+              <option className="option" value="21">
+                21
+              </option>
+            </select>
+          </div>
+          <div className="options-select-bo">
+            <label htmlFor="bo">Choose a BestOf:</label>
+            <select
+              className="bo-select"
+              name="bo"
+              id="bo"
+              onChange={onChangeBestOf}
+            >
+              <option value="1">1</option>
+              <option value="2">3</option>
+              <option value="3">5</option>
+              <option value="4">7</option>
+            </select>
+          </div>
         </div>
-        <div className="options-select-bo">
-          <label htmlFor="bo">Choose a BestOf:</label>
-          <select name="bo" id="bo" onChange={onChangeBestOf}>
-            <option value="1">1</option>
-            <option value="2">3</option>
-            <option value="3">5</option>
-            <option value="4">7</option>
-          </select>
-        </div>
-      </div>
-      <div className="option-players">
-        <form className="form">
-          <h3>Select in checkbox who will serv first in each team!</h3>
-          <div className="form-teams">
-            <div className="form-group">
-              <h3>Team Red</h3>
-              <input
-                type="text"
-                placeholder="Player One"
-                name="playerOne"
-                onChange={onChangeTeamOne}
-              />
-              <input
-                type="checkbox"
-                id="server-teamOne-playerOne"
-                checked={serverTeamOne}
-                onChange={teamOneServer}
-              />
-              <input
-                type="text"
-                placeholder="Player Two"
-                name="playerTwo"
-                onChange={onChangeTeamOne}
-              />
-              <input
-                type="checkbox"
-                id="server-teamOne-playerTwo"
-                checked={!serverTeamOne}
-                onChange={teamOneServer}
-              />
+        <div className="option-players">
+          <h3 className="info">Select who will serv first in each team!</h3>
+          <div className="teams">
+            <div className="form-group red">
+              <h1 className="team-name red">Team Red</h1>
+              <div className="player">
+                <input
+                  className="input-text "
+                  type="text"
+                  placeholder="Player One"
+                  name="playerOne"
+                  onChange={onChangeTeamOne}
+                  required
+                />
+                <input
+                  className="input-checkbox"
+                  type="checkbox"
+                  id="server-teamOne-playerOne"
+                  checked={serverTeamOne}
+                  onChange={teamOneServer}
+                />
+                <label htmlFor="server-teamOne-playerOne"></label>
+              </div>
+              <div className="player">
+                <input
+                  className="input-text"
+                  type="text"
+                  placeholder="Player Two"
+                  name="playerTwo"
+                  onChange={onChangeTeamOne}
+                  required
+                />
+                <input
+                  className="input-checkbox"
+                  type="checkbox"
+                  id="server-teamOne-playerTwo"
+                  checked={!serverTeamOne}
+                  onChange={teamOneServer}
+                />
+                <label htmlFor="server-teamOne-playerTwo"></label>
+              </div>
             </div>
-            <div className="form-group">
-              <h3>Team Blue</h3>
-              <input
-                type="text"
-                placeholder="Player One"
-                name="playerOne"
-                onChange={onChangeTeamTwo}
-              />
-              <input
-                type="checkbox"
-                id="server-teamTwo-playerOne"
-                checked={serverTeamTwo}
-                onChange={teamTwoServer}
-              />
-              <input
-                type="text"
-                placeholder="Player Two"
-                name="playerTwo"
-                onChange={onChangeTeamTwo}
-              />
-              <input
-                type="checkbox"
-                id="server-teamTwo-playerTwo"
-                checked={!serverTeamTwo}
-                onChange={teamTwoServer}
-              />
+            <div className="form-group blue">
+              <h1 className="team-name blue">Team Blue</h1>
+              <div className="player">
+                <input
+                  className="input-text "
+                  type="text"
+                  placeholder="Player One"
+                  name="playerOne"
+                  onChange={onChangeTeamTwo}
+                  required
+                />
+                <input
+                  className="input-checkbox"
+                  type="checkbox"
+                  id="server-teamTwo-playerOne"
+                  checked={serverTeamTwo}
+                  onChange={teamTwoServer}
+                />
+                <label htmlFor="server-teamTwo-playerOne"></label>
+              </div>
+              <div className="player">
+                <input
+                  className="input-text "
+                  type="text"
+                  placeholder="Player Two"
+                  name="playerTwo"
+                  onChange={onChangeTeamTwo}
+                  required
+                />
+                <input
+                  className="input-checkbox"
+                  type="checkbox"
+                  id="server-teamTwo-playerTwo"
+                  checked={!serverTeamTwo}
+                  onChange={teamTwoServer}
+                />
+                <label htmlFor="server-teamTwo-playerTwo"></label>
+              </div>
             </div>
           </div>
-          <div className="form-start">
-            <button type="submit" onClick={setSettings}>
+          <div className="start">
+            <Alert />
+            <button
+              className="start-btn"
+              type="submit"
+              onClick={(e) => setSettings(e)}
+            >
               START GAME
             </button>
           </div>
-        </form>
-      </div>
+        </div>
+      </form>
     </div>
   );
 };
 
-export default connect(null, { gameStart })(Options);
+export default connect(null, { gameStart, setAlert })(Options);

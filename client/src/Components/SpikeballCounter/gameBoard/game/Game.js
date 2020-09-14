@@ -9,6 +9,8 @@ import {
 } from "../../../../actions/game";
 import ButtonPlayer from "./ButtonPlayer";
 import ButtonAfterFaul from "./ButtonAfterFaul";
+import PointsBoard from "./Points";
+import ChangeServers from "./ChangeServers";
 
 const Game = ({
   teamOne,
@@ -22,8 +24,6 @@ const Game = ({
   gameSetOver,
   saveSet,
   gameOver,
-
-  ballPossessionNew,
 }) => {
   // ballPossession state
   const [ballPossession, setBallPossession] = useState({
@@ -243,7 +243,7 @@ const Game = ({
         playerTwo: 0,
         afterEnemyTeamFaul: 0,
       });
-      setTeamTwoPlayersPoints({
+      setTeamTwoPlayersPointsPerSet({
         playerOne: 0,
         playerTwo: 0,
         afterEnemyTeamFaul: 0,
@@ -257,7 +257,7 @@ const Game = ({
         playerTwo: 0,
         afterEnemyTeamFaul: 0,
       });
-      setTeamTwoPlayersPoints({
+      setTeamTwoPlayersPointsPerSet({
         playerOne: 0,
         playerTwo: 0,
         afterEnemyTeamFaul: 0,
@@ -422,108 +422,18 @@ const Game = ({
   };
 
   return changeBox ? (
-    <div className="change-servers">
-      <div className="team-one">
-        <h3>Team One</h3>
-        <div className="inputs">
-          <div className="select">
-            <h3>Select first server in next set!</h3>
-            <select
-              name="select-server-team-one"
-              id="select-server-team-one"
-              onChange={onChangeTeamOne}
-            >
-              <option
-                id="server-teamOne-playerOne"
-                value={teamOne.playerOne.name}
-              >
-                {teamOne.playerOne.name}
-              </option>
-              <option
-                id="server-teamOne-playerTwo"
-                value={teamOne.playerTwo.name}
-              >
-                {teamOne.playerTwo.name}
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div className="team-two">
-        <h3>Team Two</h3>
-        <div className="inputs">
-          <div className="select">
-            <select
-              name="select-server-team-two"
-              id="select-server-team-two"
-              onChange={onChangeTeamTwo}
-            >
-              <option
-                id="server-teamTwo-playerOne"
-                value={teamTwo.playerOne.name}
-              >
-                {teamTwo.playerOne.name}
-              </option>
-              <option
-                id="server-teamTwo-playerTwo"
-                value={teamTwo.playerTwo.name}
-              >
-                {teamTwo.playerTwo.name}
-              </option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <div className="button">
-        <button onClick={closeBox}>Close</button>
-      </div>
-    </div>
+    <ChangeServers
+      onChangeTeamOne={onChangeTeamOne}
+      TeamOnePlayerOne={teamOne.playerOne.name}
+      TeamOnePlayerTwo={teamOne.playerTwo.name}
+      onChangeTeamTwo={onChangeTeamTwo}
+      TeamTwoPlayerOne={teamTwo.playerOne.name}
+      TeamTwoPlayerTwo={teamTwo.playerTwo.name}
+      closeBox={closeBox}
+    />
   ) : (
     <div className="game">
-      <div className="points">
-        <div className="teamOne">
-          TeamOne Points:{points.teamOnePoints} Sets:{set.teamOneSet}
-        </div>
-        <div className="teamTwo">
-          TeamTwo Points:{points.teamTwoPoints} Sets:{set.teamTwoSet}
-        </div>
-        <div className="rounds">
-          <div className="rounds-teamone">
-            {gameRounds.map((round, index) =>
-              index === 0 ? (
-                <Fragment key={`fragment-${index}`}></Fragment>
-              ) : round.getPoint.teamOne ? (
-                <i
-                  className="fas fa-volleyball-ball success-score"
-                  key={`${index}-teamone-succes`}
-                ></i>
-              ) : (
-                <i
-                  className="fas fa-times fail-score"
-                  key={`${index}-teamone-fail`}
-                ></i>
-              )
-            )}
-          </div>
-          <div className="rounds-teamtwo">
-            {gameRounds.map((round, index) =>
-              index === 0 ? (
-                <Fragment key={`fragment-${index}`}></Fragment>
-              ) : round.getPoint.teamTwo ? (
-                <i
-                  className="fas fa-volleyball-ball success-score"
-                  key={`${index}-teamtwo-succes`}
-                ></i>
-              ) : (
-                <i
-                  className="fas fa-times fa-1x fail-score"
-                  key={`${index}-teamtwo-fail`}
-                ></i>
-              )
-            )}
-          </div>
-        </div>
-      </div>
+      <PointsBoard points={points} set={set} gameRounds={gameRounds} />
       <div className="controllers">
         <ButtonPlayer
           onClick={onClick}
