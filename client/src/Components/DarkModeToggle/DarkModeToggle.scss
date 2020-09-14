@@ -1,0 +1,43 @@
+@import "../../utilsSCSS/colors.scss";
+
+.toggle-container {
+  width: 45px;
+  height: 45px;
+  position: fixed;
+  right: 20px;
+  top: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+  .toggle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    .btn {
+      cursor: pointer;
+      border: none;
+      outline: none;
+      border-radius: 50% 0 0 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 103%;
+      height: 103%;
+      font-size: 1.5rem;
+
+      &.dark-mode {
+        background-image: url(./img/stars.jpg);
+        background-position: center;
+        background-size: cover;
+        color: $color-moon-glow;
+      }
+      &.light-mode {
+        background: $color-blue-sky;
+        color: $color-yellow-main;
+      }
+      &:focus {
+        border: none;
+        outline: none;
+      }
+    }
+  }
+}
