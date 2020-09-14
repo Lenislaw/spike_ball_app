@@ -1,7 +1,316 @@
+.toggle-container {
+  width: 45px;
+  height: 45px;
+  position: fixed;
+  right: 20px;
+  top: 10px;
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.toggle-container .toggle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.toggle-container .toggle .btn {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  border-radius: 50% 0 0 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 103%;
+  height: 103%;
+  font-size: 1.5rem;
+}
+
+.toggle-container .toggle .btn.dark-mode {
+  background-image: url(./img/stars.jpg);
+  background-position: center;
+  background-size: cover;
+  color: #f3f1c9;
+}
+
+.toggle-container .toggle .btn.light-mode {
+  background: #38b0de;
+  color: #fbd429;
+}
+
+.toggle-container .toggle .btn:focus {
+  border: none;
+  outline: none;
+}
+
 body {
   margin: 0;
   padding: 0;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+}
+
+.App {
+  min-height: 100vh;
+}
+
+.App .container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.App .container .spikeball-counter-logo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  max-width: 350px;
+  margin: 0 auto;
+}
+
+.App .container .spikeball-counter-logo-image {
+  width: 100%;
+}
+
+.App .container .spikeball-counter-options {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.App .container .spikeball-counter-options .form {
+  max-width: 300px;
+}
+
+.App .container .spikeball-counter-options .form .options-select {
+  text-align: center;
+}
+
+.App .container .spikeball-counter-options .form .options-select-max-points {
+  padding: 1rem;
+}
+
+.App .container .spikeball-counter-options .form .options-select-bo {
+  padding: 1rem;
+}
+
+.App .container .spikeball-counter-options .form .option-players .info {
+  border: 3px solid red;
+  padding: 1rem;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.App .container .spikeball-counter-options .form .teams {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.App .container .spikeball-counter-options .form .teams .form-group {
+  text-align: center;
+  padding: 1rem;
+}
+
+.App .container .spikeball-counter-options .form .teams .form-group.red {
+  background-color: #ce1622;
+}
+
+.App .container .spikeball-counter-options .form .teams .form-group.blue {
+  background-color: #1754ed;
+}
+
+.App .container .spikeball-counter-options .form .teams .form-group .team-name {
+  color: #020202;
+}
+
+.App .container .spikeball-counter-options .form .teams .form-group .player {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  padding: 0.3rem;
+}
+
+.App .container .spikeball-counter-options .form .teams .form-group .player .input-text {
+  padding: 0.5rem;
+  outline: none;
+  border: none;
+}
+
+.App .container .spikeball-counter-options .form .teams .form-group .player .input-checkbox {
+  display: none;
+}
+
+.App .container .spikeball-counter-options .form .teams .form-group .player .input-checkbox + label:before {
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f007";
+  margin-left: 3px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  background: #fff;
+  width: 31px;
+  height: 31px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.App .container .spikeball-counter-options .form .teams .form-group .player .input-checkbox:checked + label:before {
+  background: #fbd429;
+  color: #333;
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  content: "\f45f";
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.App .container .spikeball-counter-options .form .start {
+  padding: 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.App .container .spikeball-counter-options .form .start .alert {
+  padding: 1rem;
+  text-align: center;
+}
+
+.App .container .spikeball-counter-options .form .start .start-btn {
+  display: block;
+  width: 200px;
+  padding: 1rem;
+  cursor: pointer;
+  font-size: 1.5rem;
+  outline: none;
+  background-color: #fbd429;
+  border: none;
+  border-radius: 5px;
+}
+
+.App.dark-mode {
+  background-color: #1a1919;
+  color: #999;
+  -webkit-transition: 0.2s all ease-in;
+  transition: 0.2s all ease-in;
+}
+
+.App.dark-mode .spikeball-counter {
+  border: 3px solid #fbd429;
+  border-radius: 5px;
+}
+
+.App.dark-mode .spikeball-counter-options .form .options-select-max-points .max-points-select {
+  background: #fbd429;
+  font-size: 1.1rem;
+  margin: 0.2rem;
+  padding: 0.2rem;
+  outline: none;
+  border: none;
+}
+
+.App.dark-mode .spikeball-counter-options .form .options-select-bo {
+  padding: 1rem;
+}
+
+.App.dark-mode .spikeball-counter-options .form .options-select-bo .bo-select {
+  background: #fbd429;
+  font-size: 1.1rem;
+  margin: 0.2rem;
+  padding: 0.2rem;
+  outline: none;
+  border: none;
+}
+
+.App.dark-mode .spikeball-counter-options .form .option-players .info {
+  border-color: #fbd429;
+}
+
+.App.light-mode {
+  background-color: #fdfdfd;
+  color: #020202;
+  -webkit-transition: 0.2s all ease-in;
+  transition: 0.2s all ease-in;
+}
+
+.App.light-mode .spikeball-counter {
+  border: 3px solid #020202;
+  border-radius: 5px;
+}
+
+.App.light-mode .spikeball-counter-options .form .options-select-max-points .max-points-select {
+  font-size: 1.1rem;
+  margin: 0.2rem;
+  padding: 0.2rem;
+  outline: none;
+  border: 2px solid #020202;
+}
+
+.App.light-mode .spikeball-counter-options .form .options-select-bo {
+  padding: 1rem;
+}
+
+.App.light-mode .spikeball-counter-options .form .options-select-bo .bo-select {
+  font-size: 1.1rem;
+  margin: 0.2rem;
+  padding: 0.2rem;
+  outline: none;
+  border: 2px solid #020202;
+}
+
+.App.light-mode .spikeball-counter-options .form .option-players .info {
+  border-color: #020202;
 }
 /*# sourceMappingURL=App.css.map */
