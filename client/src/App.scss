@@ -1,9 +1,11 @@
 @import "Components/DarkModeToggle/DarkModeToggle.scss";
 
 $color-yellow-main: #fbd429;
+$color-neon-main: #39ff14;
 $color-black-main: #020202;
 $color-red-main: #ce1622;
 $color-blue-main: #1754ed;
+$coin-size: 260px;
 
 body {
   margin: 0;
@@ -18,6 +20,7 @@ body {
     max-width: 1100px;
     margin: 0 auto;
     padding: 1rem;
+    min-height: 100vh;
     .spikeball-counter {
       &-logo {
         display: flex;
@@ -47,7 +50,6 @@ body {
           }
           .option-players {
             .info {
-              border: 3px solid red;
               padding: 1rem;
               border-radius: 5px;
               text-align: center;
@@ -57,6 +59,7 @@ body {
             display: flex;
             flex-direction: column;
             .form-group {
+              margin: 1rem 0;
               text-align: center;
 
               padding: 1rem;
@@ -117,6 +120,7 @@ body {
             .alert {
               padding: 1rem;
               text-align: center;
+              height: 2rem;
             }
             .start-btn {
               display: block;
@@ -130,6 +134,422 @@ body {
               border-radius: 5px;
             }
           }
+        }
+      }
+      &-game {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        .modal {
+          position: fixed;
+          z-index: 1;
+          left: 0;
+          top: 0;
+          height: 100%;
+
+          width: 100%;
+          overflow: auto;
+          background-color: rgba(0, 0, 0, 0.5);
+          &-content {
+            background-color: #f4f4f4;
+            margin: 10% auto;
+            padding: 1rem;
+            height: 90vw;
+            min-height: 410px;
+            width: 90vw;
+            max-width: 400px;
+            max-height: 400px;
+            box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2),
+              0 7px 20px 0 rgba(0, 0, 0, 0.17);
+            animation-name: modalopen;
+            animation-duration: 1s;
+            .who-starts {
+              width: 200px;
+              height: 110px;
+              margin: 0 auto;
+              text-align: center;
+              &-ask {
+                font-size: 1.3rem;
+              }
+              &-answer {
+                font-size: 1.5rem;
+                font-weight: bold;
+                &.red {
+                  color: $color-red-main;
+                }
+                &.blue {
+                  color: $color-blue-main;
+                }
+              }
+            }
+            .closeBtn {
+              color: #ccc;
+              float: right;
+              font-size: 30px;
+            }
+            .closeBtn:hover,
+            .closeBtn:focus {
+              color: #000;
+              text-decoration: none;
+              cursor: pointer;
+            }
+            .coin {
+              position: relative;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              @keyframes flipOne {
+                from {
+                  transform: rotateY(0deg);
+                }
+                to {
+                  transform: rotateY(1080deg);
+                }
+              }
+              @keyframes flipTwo {
+                from {
+                  transform: rotateY(0deg);
+                }
+                to {
+                  transform: rotateY(900deg);
+                }
+              }
+
+              .coin-back {
+                background: $color-red-main
+                  url(./img/spikeball_logo_coin_back-removebg-preview.png)
+                  no-repeat center center;
+                width: $coin-size;
+                height: $coin-size;
+                border-radius: 50%;
+
+                backface-visibility: visible;
+                transform-style: preserve-3d;
+                transform: translate(-50%, 50%);
+                &::before {
+                  content: "";
+                  z-index: -1;
+                  display: block;
+                  background: $color-blue-main
+                    url(./img/spikeball_logo_coin_front-removebg-preview.png)
+                    no-repeat center center;
+                  width: $coin-size;
+                  height: $coin-size;
+                  position: absolute;
+                  top: 0;
+                  right: 0;
+                  bottom: 0;
+                  left: 0;
+                  border-radius: 50%;
+                  transform: translateZ(4px);
+                  backface-visibility: visible;
+                }
+                &.red {
+                  animation: flipTwo 3s forwards;
+                }
+                &.blue {
+                  animation: flipOne 3s forwards;
+                }
+              }
+            }
+          }
+        }
+        .points {
+          width: 100%;
+          max-width: 450px;
+          &-teams {
+            display: flex;
+
+            .team {
+              display: flex;
+              flex-direction: row;
+              flex: 1;
+              &.reverse {
+                flex-direction: row-reverse;
+              }
+              .sets {
+                flex: 1.5;
+                width: 4rem;
+                height: 4rem;
+                font-size: 3rem;
+
+                text-align: center;
+                position: relative;
+                color: $color-black-main;
+                .set {
+                  font-size: 0.8rem;
+                  position: absolute;
+                  width: 100%;
+                  bottom: 0;
+                  left: 50%;
+                  transform: translate(-50%);
+                }
+                &.right {
+                  float: right;
+                }
+                &.red {
+                  background: $color-red-main;
+                }
+                &.blue {
+                  background: $color-blue-main;
+                }
+              }
+              .points {
+                flex: 2;
+
+                font-size: 2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+            }
+            .dots {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 2rem;
+            }
+          }
+        }
+        .controllers {
+          .btn-player,
+          .after-faul {
+            cursor: pointer;
+            display: block;
+            padding: 1rem 0;
+            width: 145px;
+            border: none;
+            outline: none;
+            margin: 0.5rem;
+            font-size: 1.2rem;
+            &.teamone {
+              background: $color-red-main;
+              &:hover {
+                background: lighten($color: $color-red-main, $amount: 10);
+              }
+            }
+            &.teamtwo {
+              background: $color-blue-main;
+              &:hover {
+                background: lighten($color: $color-blue-main, $amount: 10);
+              }
+            }
+            &-icon {
+              padding: 0 0.4em;
+            }
+          }
+          display: flex;
+        }
+        .rounds {
+          .round {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+
+            width: 100%;
+            .point {
+              display: flex;
+              width: 45px;
+              height: 110px;
+              flex-direction: column;
+              justify-content: flex-end;
+              .action {
+                text-align: center;
+              }
+              &-get,
+              &-lose {
+                border: 1px solid black;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &.red {
+                  background: darken($color-red-main, 30);
+                }
+                &.blue {
+                  background: darken($color-blue-main, 30);
+                }
+              }
+            }
+          }
+        }
+      }
+      &-results {
+        .results-game {
+          text-align: center;
+
+          .sets {
+            margin: 0 auto;
+            display: flex;
+            max-width: 300px;
+            flex-direction: column;
+            &-team {
+              display: flex;
+              flex-direction: row;
+
+              height: 70px;
+
+              .team,
+              .player,
+              .afterMistake {
+                flex: 1;
+                height: 69px;
+                width: 50px;
+                border: 1px solid $color-black-main;
+                font-size: 1.5rem;
+                display: flex;
+                flex-direction: column-reverse;
+                align-items: center;
+                justify-content: space-between;
+
+                &-small {
+                  font-size: 0.8rem;
+
+                  text-align: center;
+                }
+              }
+              .team {
+                font-size: 3rem;
+              }
+
+              &.blue {
+                background: $color-blue-main;
+              }
+              &.red {
+                background: $color-red-main;
+              }
+            }
+          }
+        }
+        .set {
+          text-align: center;
+
+          .set-points {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            max-width: 600px;
+
+            margin: 0 auto;
+            .point {
+              margin: 0 auto;
+              display: flex;
+              width: 45px;
+              height: 110px;
+              flex-direction: column;
+              justify-content: flex-end;
+              .action {
+                text-align: center;
+              }
+              &-get,
+              &-lose {
+                border: 1px solid black;
+                width: 40px;
+                height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                &.red {
+                  background: darken($color-red-main, 30);
+                }
+                &.blue {
+                  background: darken($color-blue-main, 30);
+                }
+              }
+            }
+            &-total {
+              margin: 1rem auto;
+              max-width: 700px;
+              .total {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                .team {
+                  flex: 1;
+                  border: 1px solid $color-black-main;
+                  font-size: 1rem;
+                  display: flex;
+                  flex-direction: row;
+                  align-items: center;
+                  justify-content: space-between;
+                  &-total,
+                  .player,
+                  .afterMistake {
+                    flex: 1;
+                    height: 60px;
+                    display: flex;
+                    flex-direction: column-reverse;
+                    justify-content: space-between;
+                    align-items: center;
+                    font-size: 1.2rem;
+                    border: 1px solid $color-black-main;
+                  }
+                  &-total {
+                    font-size: 2rem;
+
+                    &-small {
+                      font-size: 0.8rem;
+                    }
+                  }
+                  &-small {
+                    text-align: center;
+                    font-size: 0.8rem;
+                  }
+                  &.red {
+                    background-color: $color-red-main;
+                  }
+                  &.blue {
+                    background-color: $color-blue-main;
+                  }
+                }
+              }
+              .game-duration {
+                padding: 1rem;
+              }
+            }
+          }
+        }
+        .new-game {
+          padding: 2rem;
+          display: flex;
+          justify-content: center;
+          &-btn {
+            padding: 1rem 1.5rem;
+            width: 250px;
+            border: none;
+            outline: none;
+            display: block;
+            margin: 0 auto;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: $color-yellow-main;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+    .gameboard {
+      .change-servers {
+        max-width: 300px;
+        margin: 0 auto;
+        text-align: center;
+      }
+      .button {
+        margin: 1rem;
+        &-btn {
+          padding: 1rem 1.5rem;
+          width: 200px;
+          border: none;
+          outline: none;
+          display: block;
+          margin: 0 auto;
+          border-radius: 5px;
+          cursor: pointer;
+          background-color: $color-yellow-main;
+          font-weight: bold;
         }
       }
     }
@@ -173,6 +593,20 @@ body {
           }
         }
       }
+      .neon {
+        color: $color-neon-main;
+        &-bg {
+          background: $color-neon-main;
+        }
+      }
+    }
+    .select-style {
+      background: $color-yellow-main;
+      font-size: 1.1rem;
+      margin: 0.2rem;
+      padding: 0.2rem;
+      outline: none;
+      border: none;
     }
   }
   &.light-mode {
@@ -191,7 +625,7 @@ body {
                 margin: 0.2rem;
                 padding: 0.2rem;
                 outline: none;
-                border: 2px solid $color-black-main;
+                border: none;
               }
             }
             &-bo {
@@ -201,13 +635,64 @@ body {
                 margin: 0.2rem;
                 padding: 0.2rem;
                 outline: none;
-                border: 2px solid $color-black-main;
+                border: none;
               }
             }
           }
           .option-players {
             .info {
-              border-color: $color-black-main;
+              border-color: $color-yellow-main;
+            }
+          }
+        }
+      }
+      .yellow {
+        color: $color-yellow-main;
+        &-bg {
+          background: $color-yellow-main;
+        }
+      }
+      .white {
+        color: white;
+      }
+    }
+    .select-style {
+      font-size: 1.1rem;
+      margin: 0.2rem;
+      padding: 0.2rem;
+      outline: none;
+      border: none;
+    }
+  }
+}
+@media (min-width: 767px) {
+  .App {
+    .container {
+      .spikeball-counter {
+        &-options {
+          .form {
+            max-width: 575px;
+            .teams {
+              flex-direction: row;
+              margin: 0 auto;
+              width: 100%;
+              .form-group {
+                margin: 0 1rem;
+              }
+            }
+          }
+        }
+        &-game {
+          .rounds {
+            .round {
+              grid-template-columns: repeat(11, 1fr);
+            }
+          }
+        }
+        &-results {
+          .set {
+            .set-points {
+              grid-template-columns: repeat(11, 1fr);
             }
           }
         }
