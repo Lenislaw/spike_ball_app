@@ -10,10 +10,19 @@ const ButtonPlayer = ({
 }) => {
   return (
     <Fragment>
-      <button onClick={onClick} data-player={dataPlayer} data-team={dataTeam}>
+      <button
+        className={`btn-player ${dataTeam} `}
+        onClick={onClick}
+        data-player={dataPlayer}
+        data-team={dataTeam}
+      >
         {playerName}
         {server && ballPossesion && (
-          <i data-team={dataTeam} data-player={dataPlayer} className="fas fa-volleyball-ball"></i>
+          <i
+            data-team={dataTeam}
+            data-player={dataPlayer}
+            className="btn-player-icon fas fa-volleyball-ball neon yellow"
+          ></i>
         )}
       </button>
     </Fragment>

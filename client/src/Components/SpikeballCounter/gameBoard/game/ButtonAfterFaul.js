@@ -1,10 +1,14 @@
 import React, { Fragment } from "react";
 
-const ButtonAfterFaul = ({ onClick, dataTeam }) => {
 
+const ButtonAfterFaul = ({ onClick, dataTeam }) => {
   return (
     <Fragment>
-      <button onClick={onClick} data-team={dataTeam}>
+      <button
+        className={`after-faul ${dataTeam}`}
+        onClick={onClick}
+        data-team={dataTeam}
+      >
         After Faul
       </button>
     </Fragment>
