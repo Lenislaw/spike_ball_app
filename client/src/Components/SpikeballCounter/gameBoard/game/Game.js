@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState} from "react";
 import { connect } from "react-redux";
 import {
   setGameRounds,
@@ -7,10 +7,12 @@ import {
   saveSet,
   ballPossessionUpdate,
 } from "../../../../actions/game";
+import Modal from "./Modal";
 import ButtonPlayer from "./ButtonPlayer";
 import ButtonAfterFaul from "./ButtonAfterFaul";
 import PointsBoard from "./Points";
 import ChangeServers from "./ChangeServers";
+import Rounds from "./Rounds";
 
 const Game = ({
   teamOne,
@@ -51,8 +53,9 @@ const Game = ({
   });
   // who get point
   const [getPoint, setGetPoint] = useState({
-    teamOne: false,
-    teamTwo: false,
+    teamOne: { point: false, enemyMiss: false },
+
+    teamTwo: { point: false, enemyMiss: false },
   });
   //set points total state
   const [points, setPoints] = useState({
@@ -103,10 +106,15 @@ const Game = ({
           10
         );
 
-        setGetPoint({
-          teamOne: true,
-          teamTwo: false,
-        });
+        whoGetPointId === 1 || whoGetPointId === 2
+          ? setGetPoint({
+              teamOne: { point: true, afterMiss: false },
+              teamTwo: { point: false, afterMiss: false },
+            })
+          : setGetPoint({
+              teamOne: { point: true, afterMiss: true },
+              teamTwo: { point: false, afterMiss: false },
+            });
 
         whoGetPoint(whoGetPointId, "one");
 
@@ -127,10 +135,16 @@ const Game = ({
 
         whoGetPoint(whoGetPointId, "two");
         setPoints({ ...points, teamTwoPoints: ++points.teamTwoPoints });
-        setGetPoint({
-          teamOne: false,
-          teamTwo: true,
-        });
+
+        whoGetPointId === 3 || whoGetPointId === 4
+          ? setGetPoint({
+              teamOne: { point: false, afterMiss: false },
+              teamTwo: { point: true, afterMiss: false },
+            })
+          : setGetPoint({
+              teamOne: { point: false, afterMiss: false },
+              teamTwo: { point: true, afterMiss: true },
+            });
       }
     } else if (ballPossession.teamTwo) {
       if (e.target.getAttribute("data-team") === "teamtwo") {
@@ -141,10 +155,16 @@ const Game = ({
 
         whoGetPoint(whoGetPointId, "two");
         setPoints({ ...points, teamTwoPoints: ++points.teamTwoPoints });
-        setGetPoint({
-          teamOne: false,
-          teamTwo: true,
-        });
+
+        whoGetPointId === 3 || whoGetPointId === 4
+          ? setGetPoint({
+              teamOne: { point: false, afterMiss: false },
+              teamTwo: { point: true, afterMiss: false },
+            })
+          : setGetPoint({
+              teamOne: { point: false, afterMiss: false },
+              teamTwo: { point: true, afterMiss: true },
+            });
       } else {
         setBallPossession({
           teamOne: true,
@@ -161,10 +181,16 @@ const Game = ({
 
         whoGetPoint(whoGetPointId, "one");
         setPoints({ ...points, teamOnePoints: ++points.teamOnePoints });
-        setGetPoint({
-          teamOne: true,
-          teamTwo: false,
-        });
+ 
+        whoGetPointId === 1 || whoGetPointId === 2
+          ? setGetPoint({
+              teamOne: { point: true, afterMiss: false },
+              teamTwo: { point: false, afterMiss: false },
+            })
+          : setGetPoint({
+              teamOne: { point: true, afterMiss: true },
+              teamTwo: { point: false, afterMiss: false },
+            });
       }
     }
   };
@@ -432,46 +458,54 @@ const Game = ({
       closeBox={closeBox}
     />
   ) : (
-    <div className="game">
-      <PointsBoard points={points} set={set} gameRounds={gameRounds} />
+    <div className="spikeball-counter-game">
+      <Modal />
+      <PointsBoard points={points} set={set} />
       <div className="controllers">
-        <ButtonPlayer
-          onClick={onClick}
-          dataPlayer={teamOne.playerOne.id}
-          dataTeam={"teamone"}
-          playerName={teamOne.playerOne.name}
-          server={serverTeamOne.playerOne}
-          ballPossesion={ballPossession.teamOne}
-        />
-        <ButtonPlayer
-          onClick={onClick}
-          dataPlayer={teamOne.playerTwo.id}
-          dataTeam={"teamone"}
-          playerName={teamOne.playerTwo.name}
-          server={serverTeamOne.playerTwo}
-          ballPossesion={ballPossession.teamOne}
-        />
+        <div className="controllers-team-one">
+          <ButtonPlayer
+            onClick={onClick}
+            dataPlayer={teamOne.playerOne.id}
+            dataTeam={"teamone"}
+            playerName={teamOne.playerOne.name}
+            server={serverTeamOne.playerOne}
+            ballPossesion={ballPossession.teamOne}
+          />
+          <ButtonPlayer
+            onClick={onClick}
+            dataPlayer={teamOne.playerTwo.id}
+            dataTeam={"teamone"}
+            playerName={teamOne.playerTwo.name}
+            server={serverTeamOne.playerTwo}
+            ballPossesion={ballPossession.teamOne}
+          />
 
-        <ButtonAfterFaul onClick={onClick} dataTeam={"teamone"} />
+          <ButtonAfterFaul onClick={onClick} dataTeam={"teamone"} />
+        </div>
 
-        <ButtonPlayer
-          onClick={onClick}
-          dataPlayer={teamTwo.playerOne.id}
-          dataTeam={"teamtwo"}
-          playerName={teamTwo.playerOne.name}
-          server={serverTeamTwo.playerOne}
-          ballPossesion={ballPossession.teamTwo}
-        />
-        <ButtonPlayer
-          onClick={onClick}
-          dataPlayer={teamTwo.playerTwo.id}
-          dataTeam={"teamtwo"}
-          playerName={teamTwo.playerTwo.name}
-          server={serverTeamTwo.playerTwo}
-          ballPossesion={ballPossession.teamTwo}
-        />
+        <div className="controllers-team-two">
+          <ButtonPlayer
+            onClick={onClick}
+            dataPlayer={teamTwo.playerOne.id}
+            dataTeam={"teamtwo"}
+            playerName={teamTwo.playerOne.name}
+            server={serverTeamTwo.playerOne}
+            ballPossesion={ballPossession.teamTwo}
+          />
+          <ButtonPlayer
+            onClick={onClick}
+            dataPlayer={teamTwo.playerTwo.id}
+            dataTeam={"teamtwo"}
+            playerName={teamTwo.playerTwo.name}
+            server={serverTeamTwo.playerTwo}
+            ballPossesion={ballPossession.teamTwo}
+          />
 
-        <ButtonAfterFaul onClick={onClick} dataTeam={"teamtwo"} />
+          <ButtonAfterFaul onClick={onClick} dataTeam={"teamtwo"} />
+        </div>
+      </div>
+      <div className="rounds">
+        <Rounds gameRounds={gameRounds} />
       </div>
     </div>
   );
