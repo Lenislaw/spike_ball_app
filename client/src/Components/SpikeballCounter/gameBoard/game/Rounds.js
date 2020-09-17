@@ -1,29 +1,14 @@
 import React, { Fragment } from "react";
-import IconPoint from "./IconPoint";
-import IconFail from "./IconFail";
+import GetPoint from "./GetPoint";
 
-const Rounds = ({ gameRounds, team }) => {
-  return team === "red" ? (
-    <div className="rounds-team">
+const Rounds = ({ gameRounds }) => {
+  return (
+    <div className="round">
       {gameRounds.map((round, index) =>
         index === 0 ? (
           <Fragment key={`fragment-${index}`}></Fragment>
-        ) : round.getPoint.teamOne ? (
-          <IconPoint key={`${index}-teamone-succes`} />
         ) : (
-          <IconFail key={`${index}-teamone-fail`} />
-        )
-      )}
-    </div>
-  ) : (
-    <div className="rounds-team">
-      {gameRounds.map((round, index) =>
-        index === 0 ? (
-          <Fragment key={`fragment-${index}`}></Fragment>
-        ) : round.getPoint.teamTwo ? (
-          <IconPoint key={`${index}-teamtwo-succes`} />
-        ) : (
-          <IconFail key={`${index}-teamtwo-fail`} />
+          <GetPoint round={round} index={index} key={`point-${index}`} />
         )
       )}
     </div>

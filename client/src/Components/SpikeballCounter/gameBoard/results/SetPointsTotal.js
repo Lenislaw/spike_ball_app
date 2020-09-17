@@ -3,34 +3,52 @@ import React from "react";
 const SetPointsTotal = ({ set }) => {
   return (
     <div className="set-points-total">
-      <div className="teamOne">
-        <div className="total">
-          Team One Points: {set[set.length - 1].points.teamOnePoints}(
-          {set[set.length - 1].teamOnePlayersPointsPerSet.afterEnemyTeamFaul})
+      <div className="total">
+        <div className="team red">
+          <div className="team-total">
+            {set[set.length - 1].points.teamOnePoints}(
+            {set[set.length - 1].teamOnePlayersPointsPerSet.afterEnemyTeamFaul})
+            <small className="team-total-small">Points</small>
+          </div>
+          <div className="player">
+            {set[set.length - 1].teamOnePlayersPointsPerSet.playerOne}
+            <small className="player-small">
+              {set[set.length - 1].teamOne.playerOne.name}
+            </small>
+          </div>
+          <div className="player">
+            {set[set.length - 1].teamOnePlayersPointsPerSet.playerTwo}
+            <small className="player-small">
+              {set[set.length - 1].teamOne.playerTwo.name}
+            </small>
+          </div>
+          <div className="afterMistake">
+            {set[set.length - 1].teamOnePlayersPointsPerSet.afterEnemyTeamFaul}
+            <small className="afterMistake-small">After hint</small>
+          </div>
         </div>
-        <div className="playerOne">
-          {set[set.length - 1].teamOne.playerOne.name} Points:{" "}
-          {set[set.length - 1].teamOnePlayersPointsPerSet.playerOne}
-        </div>
-        <div className="playerTwo">
-          {" "}
-          {set[set.length - 1].teamOne.playerTwo.name} Points:{" "}
-          {set[set.length - 1].teamOnePlayersPointsPerSet.playerTwo}
-        </div>
-      </div>
-      <div className="teamTwo">
-        <div className="total">
-          Team Two Points: {set[set.length - 1].points.teamTwoPoints}(
-          {set[set.length - 1].teamTwoPlayersPointsPerSet.afterEnemyTeamFaul})
-        </div>
-        <div className="playerOne">
-          {set[set.length - 1].teamTwo.playerOne.name} Points:{" "}
-          {set[set.length - 1].teamTwoPlayersPointsPerSet.playerOne}
-        </div>
-        <div className="playerTwo">
-          {" "}
-          {set[set.length - 1].teamTwo.playerTwo.name} Points:{" "}
-          {set[set.length - 1].teamTwoPlayersPointsPerSet.playerTwo}
+        <div className="team blue">
+          <div className="team-total">
+            {set[set.length - 1].points.teamTwoPoints}(
+            {set[set.length - 1].teamTwoPlayersPointsPerSet.afterEnemyTeamFaul})
+            <small className="team-small">Points</small>
+          </div>
+          <div className="player">
+            {set[set.length - 1].teamTwoPlayersPointsPerSet.playerOne}
+            <small className="player-small">
+              {set[set.length - 1].teamTwo.playerOne.name}
+            </small>
+          </div>
+          <div className="player">
+            {set[set.length - 1].teamTwoPlayersPointsPerSet.playerTwo}
+            <small className="player-small">
+              {set[set.length - 1].teamTwo.playerTwo.name}
+            </small>
+          </div>
+          <div className="afterMistake">
+            {set[set.length - 1].teamTwoPlayersPointsPerSet.afterEnemyTeamFaul}
+            <small className="afterMistake-small">After hint</small>
+          </div>
         </div>
       </div>
       <div className="game-duration">

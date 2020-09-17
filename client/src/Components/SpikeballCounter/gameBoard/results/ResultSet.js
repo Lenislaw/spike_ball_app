@@ -5,7 +5,7 @@ import SetPointsTotal from "./SetPointsTotal";
 const ResultSet = ({ name, set }) => {
   return (
     <div className="set">
-      <h3>{name}</h3>
+      <h3 className="heading">{name}</h3>
       <div className="set-points">
         {set.map((action, index) => (
           <Action
@@ -15,8 +15,8 @@ const ResultSet = ({ name, set }) => {
             length={set.length}
           />
         ))}
-        <SetPointsTotal set={set} />
       </div>
+      <SetPointsTotal set={set} />
     </div>
   );
 };

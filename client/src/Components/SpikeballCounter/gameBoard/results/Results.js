@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import { newGame } from "../../../../actions/gameSettings";
 import ResultSet from "./ResultSet";
@@ -20,54 +20,56 @@ const Results = ({
   };
 
   return (
-    <div>
-      <div className="button new-game">
-        <button className="button new-game-btn" onClick={startNewGame}>
-          New Game
-        </button>
-      </div>
+    <div className="spikeball-counter-results">
       <div className="results-game">
+        <h3>Whole Game statistics!</h3>
         <div className="sets">
-          <div className="sets-team-one">
+          <div className="sets-team red">
             <div className="team">
-              TeamOne:
               {won.teamOne
                 ? gameStats.set.teamOneSet + 1
                 : gameStats.set.teamOneSet}
+              <small className="team-small">Sets points</small>
             </div>
-            <div className="playerOne">
-              {gameStats.teamOne.playerOne.name} Points:{" "}
+            <div className="player">
               {gameStats.teamOnePlayersPoints.playerOne}
+              <small className="player-small">
+                {gameStats.teamOne.playerOne.name}
+              </small>
             </div>
-            <div className="playerTwo">
-              {" "}
-              {gameStats.teamOne.playerTwo.name} Points:{" "}
+            <div className="player">
               {gameStats.teamOnePlayersPoints.playerTwo}
+              <small className="player-small">
+                {gameStats.teamOne.playerTwo.name}
+              </small>
             </div>
             <div className="afterMistake">
-              Points after faul:{" "}
               {gameStats.teamOnePlayersPoints.afterEnemyTeamFaul}
+              <small className="afterMistake-small">After hint</small>
             </div>
           </div>
-          <div className="sets-team-one">
+          <div className="sets-team blue reverse">
             <div className="team">
-              TeamTwo:
               {won.teamTwo
                 ? gameStats.set.teamTwoSet + 1
                 : gameStats.set.teamTwoSet}
+              <small className="team-small">Set points</small>
             </div>
-            <div className="playerOne">
-              {gameStats.teamTwo.playerOne.name} Points:{" "}
+            <div className="player">
               {gameStats.teamTwoPlayersPoints.playerOne}
+              <small className="player-small">
+                {gameStats.teamTwo.playerOne.name}
+              </small>
             </div>
-            <div className="playerTwo">
-              {" "}
-              {gameStats.teamTwo.playerTwo.name} Points:{" "}
+            <div className="player">
               {gameStats.teamTwoPlayersPoints.playerTwo}
+              <small className="player-small">
+                {gameStats.teamTwo.playerTwo.name}{" "}
+              </small>
             </div>
             <div className="afterMistake">
-              Points after faul:{" "}
               {gameStats.teamTwoPlayersPoints.afterEnemyTeamFaul}
+              <small className="afterMistake-small">After hint</small>
             </div>
           </div>
         </div>
@@ -80,6 +82,15 @@ const Results = ({
       {setFive && <ResultSet name={"Set Five"} set={setFive} />}
       {setSix && <ResultSet name={"Set Six"} set={setSix} />}
       {setSeven && <ResultSet name={"Set Seven"} set={setSeven} />}
+
+      <div className="button new-game">
+        <button
+          className="button new-game-btn yellow-bg"
+          onClick={startNewGame}
+        >
+          New Game
+        </button>
+      </div>
     </div>
   );
 };
