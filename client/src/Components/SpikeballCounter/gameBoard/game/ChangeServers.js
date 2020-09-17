@@ -11,14 +11,15 @@ const ChangeServers = ({
 }) => {
   return (
     <div className="change-servers">
+      <h3>Select first server in next set!</h3>
       <div className="team-one">
         <h3>Team One</h3>
         <div className="inputs">
-          <div className="select">
-            <h3>Select first server in next set!</h3>
+          <div className="select-box">
             <select
               name="select-server-team-one"
               id="select-server-team-one"
+              className="select-style"
               onChange={onChangeTeamOne}
             >
               <option id="server-teamOne-playerOne" value={TeamOnePlayerOne}>
@@ -38,6 +39,7 @@ const ChangeServers = ({
             <select
               name="select-server-team-two"
               id="select-server-team-two"
+              className="select-style"
               onChange={onChangeTeamTwo}
             >
               <option id="server-teamTwo-playerOne" value={TeamTwoPlayerOne}>
@@ -51,7 +53,9 @@ const ChangeServers = ({
         </div>
       </div>
       <div className="button">
-        <button onClick={closeBox}>Close</button>
+        <button className="button-btn" onClick={closeBox}>
+          Start next set
+        </button>
       </div>
     </div>
   );
