@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { gameStart } from "../../../actions/gameSettings";
 import { setAlert } from "../../../actions/alert";
@@ -25,10 +25,19 @@ const Options = ({ gameStart, setAlert }) => {
     setBestOf(e.target.value);
   };
   const onChangeTeamOne = (e) => {
-    setTeamOne({ ...teamOne, [e.target.name]: e.target.value });
+    if (e.target.value.length > 7) {
+      console.log(teamOne.playerOne.length);
+      setAlert("Player name is to long! Max 7 characters!");
+    } else {
+      setTeamOne({ ...teamOne, [e.target.name]: e.target.value });
+    }
   };
   const onChangeTeamTwo = (e) => {
-    setTeamTwo({ ...teamTwo, [e.target.name]: e.target.value });
+    if (e.target.value.length > 7) {
+      setAlert("Player name is to long! Max 7 characters!");
+    } else {
+      setTeamTwo({ ...teamTwo, [e.target.name]: e.target.value });
+    }
   };
 
   const [serverTeamOne, setServerTeamOne] = useState(true);
@@ -69,13 +78,19 @@ const Options = ({ gameStart, setAlert }) => {
       teamTwo.playerTwo === ""
     ) {
       setAlert("Each Player has to be named!");
-    }
-    else if (
+    } else if (
       teamOne.playerOne === teamOne.playerTwo ||
       teamTwo.playerOne === teamTwo.playerTwo
     ) {
-      console.log("ELO");
       setAlert("Players in each team must have unique names!");
+    } else if (
+      teamOne.playerOne.length >= 7 ||
+      teamOne.playerTwo.length >= 7 ||
+      teamTwo.playerOne.length >= 7 ||
+      teamTwo.playerTwo.length >= 7
+    ) {
+      setAlert("Player name is to long! Max 7 characters!");
+      
     } else {
       const ballPossessionFlip = Math.floor(Math.random() * 2) + 1;
       gameStart(
