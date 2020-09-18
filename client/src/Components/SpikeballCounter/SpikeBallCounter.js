@@ -8,17 +8,7 @@ const SpikeBallCounter = ({ gameBegun, darkMode }) => {
 
   return (
     <div className="spikeball-counter container">
-      <div className="spikeball-counter-logo">
-        <img
-          className="spikeball-counter-logo-image"
-          src={
-            darkMode
-              ? "./imgs/sb_logo_counter_darkmode.png"
-              : "./imgs/sb_logo_counter_lightmode.png"
-          }
-          alt="Counter Logo"
-        />
-      </div>
+      <div className="spikeball-counter-logo"></div>
       {gameBegun ? <GameBoard /> : <Options />}
     </div>
   );
