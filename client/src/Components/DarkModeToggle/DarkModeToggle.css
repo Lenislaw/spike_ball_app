@@ -3,9 +3,10 @@
   height: 45px;
   position: fixed;
   right: 20px;
-  top: 10px;
+  top: 18px;
   border-radius: 50%;
   overflow: hidden;
+  z-index: 4;
 }
 
 .toggle-container .toggle {
