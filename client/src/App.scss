@@ -1,10 +1,19 @@
 @import "Components/DarkModeToggle/DarkModeToggle.scss";
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
 
 $color-yellow-main: #fbd429;
 $color-neon-main: #39ff14;
 $color-black-main: #020202;
 $color-red-main: #ce1622;
 $color-blue-main: #1754ed;
+$color-html: #ec6231;
+$color-css: #1a6fb4;
+$color-js: #efd81d;
+$color-sass: #c66394;
+$color-react: #5ed4f3;
+$color-node: #3c873a;
+$color-mongo: #569134;
+$color-grey-main: #999;
 $coin-size: 260px;
 
 body {
@@ -15,18 +24,273 @@ body {
 
 .App {
   min-height: 100vh;
+  font-family: "Roboto", sans-serif;
+  overflow: hidden;
 
+  .navbar {
+    position: relative;
+    z-index: 2;
+    &-logo {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      left: 16px;
+      top: 16px;
+      &-image {
+        width: 100%;
+      }
+    }
+    &-nav {
+      display: none;
+      flex-direction: row;
+      width: 700px;
+      min-width: 400px;
+      margin: 0 auto;
+      .list {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        list-style: none;
+        height: 82px;
+        padding: 0;
+        &-item {
+          text-decoration: none;
+          font-size: 1.5rem;
+
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex: 1;
+          text-align: center;
+        }
+      }
+
+      &-mobile {
+        color: white;
+        position: absolute;
+        left: 50%;
+        margin-top: 1rem;
+        font-size: 3rem;
+        transform: translate(-50%);
+        cursor: pointer;
+        &-side {
+          position: absolute;
+          left: 100%;
+          transition: all 0.4s ease-in;
+          margin-top: 82px;
+          width: 100vw;
+          height: calc(100vh - 82px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &.slide {
+            left: 0;
+            transition: all 0.4s ease-in;
+          }
+          .list-mobile {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            height: 100%;
+            width: 100vw;
+            list-style: none;
+            text-align: center;
+
+            .list-item {
+              height: 100%;
+              width: 100vw;
+              font-size: 2rem;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              text-decoration: none;
+            }
+          }
+        }
+      }
+    }
+  }
   .container {
     max-width: 1100px;
-    margin: 0 auto;
-    padding: 1rem;
-    min-height: 100vh;
+    margin: 82px auto;
+    min-height: calc(100vh-82px);
+    .about {
+      text-align: center;
+      &-image {
+        .photo {
+          width: 100%;
+        }
+      }
+      .open-modal {
+        padding: 1rem;
+        &-btn {
+          display: block;
+          margin: 1rem auto;
+          border: none;
+          outline: none;
+          padding: 0.7rem 1.5rem;
+          background-color: $color-yellow-main;
+          color: $color-black-main;
+          border-radius: 5px;
+          font-size: 1.4rem;
+          cursor: pointer;
+        }
+      }
+      .modal {
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+        &-content {
+          background-color: #f4f4f4;
+          margin: 10% auto;
+          padding: 1rem;
+          height: 90vw;
+          min-height: 410px;
+          width: 90vw;
+          max-width: 1000px;
+          max-height: 600px;
+          width: calc(100vw-1rem);
+          box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2),
+            0 7px 20px 0 rgba(0, 0, 0, 0.17);
+          animation-name: modalopen;
+          animation-duration: 0.7s;
+          position: relative;
+          display: flex;
+          .box {
+            width: 90%;
+            margin: auto auto;
+
+            .youtube {
+              width: 100%;
+            }
+          }
+          .modal-close-btn {
+            position: absolute;
+            right: 1rem;
+            color: #ccc;
+            font-size: 30px;
+          }
+          .modal-close-btn:hover,
+          .modal-close-btn:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .rules {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding: 0;
+
+      .swiper-container {
+        max-width: 1100px;
+        height: 500px;
+        z-index: 1;
+        border-radius: 5px;
+        .swiper-button {
+          &-prev,
+          &-next {
+            color: $color-black-main;
+          }
+        }
+        .swiper-pagination {
+          &-bullet-active {
+            background-color: $color-black-main;
+          }
+        }
+      }
+      &-accordions {
+        padding-right: 1rem;
+        .list {
+          list-style: none;
+          .item {
+            padding-left: 1.3rem;
+            &:before {
+              font-family: "Font Awesome 5 Free";
+              font-weight: 900;
+              content: "\f45f";
+              margin-left: 3px;
+              display: inline-block;
+              background: #fff;
+              width: 31px;
+              height: 31px;
+
+              align-items: center;
+              justify-content: center;
+            }
+          }
+          &-list {
+            list-style: none;
+            .item {
+              padding-left: 1.3rem;
+              &:before {
+                font-family: "Font Awesome 5 Free";
+                font-weight: 900;
+                content: "\f140";
+                margin-left: 3px;
+                display: inline-block;
+                background: #fff;
+                width: 31px;
+                height: 31px;
+              }
+            }
+          }
+        }
+      }
+      .yellow {
+        background: $color-grey-main;
+      }
+
+      .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+
+        /* Center slide text vertically */
+
+        display: flex;
+
+        .step {
+          padding: 1rem;
+          margin: 0 auto;
+          max-width: 100vw;
+          &-box {
+            width: 250px;
+            margin: 0 auto;
+            .photo {
+              width: 100%;
+            }
+          }
+          .text {
+            .red {
+              color: $color-red-main;
+            }
+            .blue {
+              color: $color-blue-main;
+            }
+            .title {
+              margin: 0;
+            }
+          }
+        }
+      }
+    }
     .spikeball-counter {
       &-logo {
         display: flex;
         justify-content: center;
         align-items: center;
         max-width: 350px;
+        height: 200px;
         margin: 0 auto;
 
         &-image {
@@ -132,6 +396,10 @@ body {
               background-color: $color-yellow-main;
               border: none;
               border-radius: 5px;
+              &:hover,
+              &:focus {
+                background: darken($color-yellow-main, 20);
+              }
             }
           }
         }
@@ -164,7 +432,7 @@ body {
             box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2),
               0 7px 20px 0 rgba(0, 0, 0, 0.17);
             animation-name: modalopen;
-            animation-duration: 1s;
+            animation-duration: 0.7s;
             .who-starts {
               width: 200px;
               height: 110px;
@@ -553,14 +821,101 @@ body {
         }
       }
     }
+    .about-app {
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 1rem;
+      .list {
+        margin: 1rem auto;
+        width: 180px;
+        list-style: none;
+        font-size: 1.5rem;
+        &-item {
+          padding: 0.5rem;
+          display: flex;
+          justify-content: space-between;
+          text-align: center;
+          &.html {
+            color: $color-html;
+          }
+          &.css {
+            color: $color-css;
+          }
+          &.sass {
+            color: $color-sass;
+          }
+          &.js {
+            color: $color-js;
+          }
+          &.react {
+            color: $color-react;
+          }
+          &.node {
+            color: $color-node;
+          }
+          &.mongo {
+            color: $color-mongo;
+          }
+          .mongo {
+            height: 1.5rem;
+            width: 1.5rem;
+
+            .photo {
+              width: 100%;
+              height: 100%;
+            }
+          }
+        }
+      }
+      .creator {
+        font-size: 1.3rem;
+        color: purple;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
   }
   &.dark-mode {
     background-color: #1a1919;
     color: #999;
     transition: 0.2s all ease-in;
-    .spikeball-counter {
-      border: 3px solid $color-yellow-main;
+    .navbar {
+      &-nav {
+        &-mobile {
+          &-side {
+            .list-mobile {
+              .list-item {
+                color: #999;
+                border-bottom: 4px solid #999;
+                background: rgba(2, 2, 2, 0.9);
+              }
+            }
+          }
+        }
+        .list {
+          &-item {
+            color: #999;
+            &:hover {
+              color: $color-yellow-main;
+            }
+          }
+        }
+      }
+    }
+    .container {
+      border-top: 3px solid $color-yellow-main;
       border-radius: 5px;
+    }
+    .spikeball-counter {
+      &-logo {
+        height: 220px;
+        background: url(./img/sb_logo_counter_darkmode.png);
+        background-size: cover;
+        background-position: center;
+      }
       &-options {
         .form {
           .options-select {
@@ -613,9 +968,38 @@ body {
     background-color: #fdfdfd;
     color: $color-black-main;
     transition: 0.2s all ease-in;
-    .spikeball-counter {
-      border: 3px solid $color-black-main;
+    .navbar {
+      &-nav {
+        &-mobile {
+          &-side {
+            .list-mobile {
+              .list-item {
+                background: rgba(250, 247, 248, 0.9);
+                color: $color-black-main;
+                border-bottom: 4px solid $color-black-main;
+              }
+            }
+          }
+        }
+        .list {
+          &-item {
+            color: $color-black-main;
+            &:hover {
+              color: $color-yellow-main;
+            }
+          }
+        }
+      }
+    }
+    .container {
+      border-top: 3px solid $color-black-main;
       border-radius: 5px;
+    }
+    .spikeball-counter {
+      &-logo {
+        background: url(./img/sb_logo_counter_lightmode.png);
+        background-size: cover;
+      }
       &-options {
         .form {
           .options-select {
@@ -663,11 +1047,26 @@ body {
       outline: none;
       border: none;
     }
+    .black {
+      color: $color-black-main;
+    }
   }
 }
 @media (min-width: 767px) {
   .App {
+    .navbar {
+      &-logo {
+        top: 0;
+      }
+      &-nav {
+        display: block;
+        &-mobile {
+          display: none;
+        }
+      }
+    }
     .container {
+      margin: 0 auto;
       .spikeball-counter {
         &-options {
           .form {
@@ -697,6 +1096,19 @@ body {
           }
         }
       }
+      .rules {
+        .swiper-container {
+          height: 450px;
+        }
+      }
     }
+  }
+}
+@keyframes modalopen {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
