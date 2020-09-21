@@ -7,12 +7,10 @@ import AboutSpike from "./Components/AboutSpike/AboutSpike";
 import Rules from "./Components/Rules/Rules";
 import SpikeBallCounter from "./Components/SpikeballCounter/SpikeBallCounter";
 import AboutApp from "./Components/AboutApp/AboutApp";
-import DarkModeToggle from "./Components/DarkModeToggle/DarkModeToggle.js";
 
 //Redux
 import { Provider } from "react-redux";
 import store from "./store";
-
 
 function App() {
   const [darkMode, setDarkMode] = useState(getInitialMode());
@@ -43,8 +41,8 @@ function App() {
     <Provider store={store}>
       <div className={darkMode ? "App dark-mode" : "App light-mode"}>
         <Router>
-          <Nav />
-          <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
+          <Nav darkMode={darkMode} setDarkMode={setDarkMode} />
+
           <Switch>
             <Route exact path="/" component={AboutSpike} />
             <Route exact path="/rules" component={Rules} />

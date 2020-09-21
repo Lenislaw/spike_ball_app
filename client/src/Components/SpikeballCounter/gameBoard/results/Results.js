@@ -1,7 +1,8 @@
 import React from "react";
 import { connect } from "react-redux";
-import { newGame } from "../../../../actions/gameSettings";
+
 import ResultSet from "./ResultSet";
+import NewGame from "./NewGame";
 
 const Results = ({
   newGame,
@@ -15,10 +16,6 @@ const Results = ({
   gameStats,
   won,
 }) => {
-  const startNewGame = () => {
-    newGame();
-  };
-
   return (
     <div className="spikeball-counter-results">
       <div className="results-game">
@@ -83,14 +80,7 @@ const Results = ({
       {setSix && <ResultSet name={"Set Six"} set={setSix} />}
       {setSeven && <ResultSet name={"Set Seven"} set={setSeven} />}
 
-      <div className="button new-game">
-        <button
-          className="button new-game-btn yellow-bg"
-          onClick={startNewGame}
-        >
-          New Game
-        </button>
-      </div>
+      <NewGame />
     </div>
   );
 };
@@ -106,4 +96,4 @@ const mapStateToProps = (state) => ({
   won: state.game.won,
 });
 
-export default connect(mapStateToProps, { newGame })(Results);
+export default connect(mapStateToProps, {})(Results);

@@ -1,8 +1,9 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { setFlippedTrue } from "../../../../actions/game";
 import Coin from "./Coin";
 
-const Modal = ({ ballPossessionFlip, setNr }) => {
+const Modal = ({ ballPossessionFlip, setNr, setFlippedTrue }) => {
   const [showCloseBtn, setShowCloseBtn] = useState(false);
   const [modal, setModal] = useState(true);
   const [whoStart, SetWhoStart] = useState("");
@@ -14,7 +15,7 @@ const Modal = ({ ballPossessionFlip, setNr }) => {
     const timerTwo = setTimeout(() => {
       setShowCloseBtn(true);
       window.addEventListener("click", (e) => {
-        clickOutSide(e);
+        clickToClose(e);
       });
     }, 3500);
     return () => {
@@ -23,12 +24,9 @@ const Modal = ({ ballPossessionFlip, setNr }) => {
     };
   }, []);
 
-  const clickOutSide = (e) => {
-    const modalById = document.getElementById("modal");
-
-    if (e.target === modalById) {
-      setModal(false);
-    }
+  const clickToClose = () => {
+    setModal(false);
+    setFlippedTrue();
   };
   return modal && setNr === 1 ? (
     <div id="modal" className="modal">
@@ -66,4 +64,4 @@ const MapStateToProps = (state) => ({
   setNr: state.game.setNr,
 });
 
-export default connect(MapStateToProps, {})(Modal);
+export default connect(MapStateToProps, { setFlippedTrue })(Modal);

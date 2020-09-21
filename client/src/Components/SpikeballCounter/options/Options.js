@@ -27,6 +27,7 @@ const Options = ({ gameStart, setAlert }) => {
   const onChangeTeamOne = (e) => {
     if (e.target.value.length > 7) {
       console.log(teamOne.playerOne.length);
+      setTeamOne({ ...teamOne });
       setAlert("Player name is to long! Max 7 characters!");
     } else {
       setTeamOne({ ...teamOne, [e.target.name]: e.target.value });
@@ -84,13 +85,12 @@ const Options = ({ gameStart, setAlert }) => {
     ) {
       setAlert("Players in each team must have unique names!");
     } else if (
-      teamOne.playerOne.length >= 7 ||
-      teamOne.playerTwo.length >= 7 ||
-      teamTwo.playerOne.length >= 7 ||
-      teamTwo.playerTwo.length >= 7
+      teamOne.playerOne.length > 7 ||
+      teamOne.playerTwo.length > 7 ||
+      teamTwo.playerOne.length > 7 ||
+      teamTwo.playerTwo.length > 7
     ) {
       setAlert("Player name is to long! Max 7 characters!");
-      
     } else {
       const ballPossessionFlip = Math.floor(Math.random() * 2) + 1;
       gameStart(
@@ -156,6 +156,7 @@ const Options = ({ gameStart, setAlert }) => {
                   placeholder="Player One"
                   name="playerOne"
                   onChange={onChangeTeamOne}
+                  maxLength="7"
                   required
                 />
                 <input
@@ -174,6 +175,7 @@ const Options = ({ gameStart, setAlert }) => {
                   placeholder="Player Two"
                   name="playerTwo"
                   onChange={onChangeTeamOne}
+                  maxLength="7"
                   required
                 />
                 <input
@@ -195,6 +197,7 @@ const Options = ({ gameStart, setAlert }) => {
                   placeholder="Player One"
                   name="playerOne"
                   onChange={onChangeTeamTwo}
+                  maxLength="7"
                   required
                 />
                 <input
@@ -213,6 +216,7 @@ const Options = ({ gameStart, setAlert }) => {
                   placeholder="Player Two"
                   name="playerTwo"
                   onChange={onChangeTeamTwo}
+                  maxLength="7"
                   required
                 />
                 <input

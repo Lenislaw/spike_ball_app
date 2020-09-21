@@ -2,10 +2,10 @@ import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Navigation, Pagination } from "swiper";
 
-import StepOne from "../../../img/step1.jpg";
-import StepTwo from "../../../img/step2.jpg";
-import StepThree from "../../../img/step3.jpg";
-import StepFour from "../../../img/step4.jpg";
+import StepOne from "../../../img/step1.png";
+import StepTwo from "../../../img/step2.png";
+import StepThree from "../../../img/step3.png";
+import StepFour from "../../../img/step4.png";
 
 // Import Swiper styles
 import "swiper/swiper-bundle.css";

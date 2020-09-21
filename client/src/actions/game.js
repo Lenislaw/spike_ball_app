@@ -12,9 +12,14 @@ import {
   GAME_OVER,
   CHANGE_GAME_SETTINGS,
   SET_BALL_POSSESSION,
+  FLIP_TRUE,
 } from "./types";
-
+export const setFlippedTrue = () => (dispatch) => {
+  dispatch({ type: FLIP_TRUE });
+};
 export const setGameRounds = (round, msg = false) => (dispatch) => {
+  console.log(round);
+
   let newRound = round;
   if (msg) {
     const ballPossessionChange = {
@@ -38,32 +43,22 @@ export const setGameRounds = (round, msg = false) => (dispatch) => {
   }
 };
 export const ballPossessionUpdate = (ballPossession) => (dispatch) => {
-
   dispatch({ type: SET_BALL_POSSESSION, payload: ballPossession });
 };
 export const saveSet = (setNr) => (dispatch) => {
-  if (setNr === 1) {
-    dispatch({ type: GAME_SAVE_SET_ONE });
-  }
-  if (setNr === 2) {
-    dispatch({ type: GAME_SAVE_SET_TWO });
-  }
-  if (setNr === 3) {
-    dispatch({ type: GAME_SAVE_SET_THREE });
-  }
-  if (setNr === 4) {
-    dispatch({ type: GAME_SAVE_SET_FOUR });
-  }
-  if (setNr === 5) {
-    dispatch({ type: GAME_SAVE_SET_FIVE });
-  }
-  if (setNr === 6) {
-    dispatch({ type: GAME_SAVE_SET_SIX });
-  }
-  if (setNr === 7) {
-    dispatch({ type: GAME_SAVE_SET_SEVEN });
-  }
+  const options = new Map([
+    [1, GAME_SAVE_SET_ONE],
+    [2, GAME_SAVE_SET_TWO],
+    [3, GAME_SAVE_SET_THREE],
+    [4, GAME_SAVE_SET_FOUR],
+    [5, GAME_SAVE_SET_FIVE],
+    [6, GAME_SAVE_SET_SIX],
+    [7, GAME_SAVE_SET_SEVEN],
+  ]);
+  const type = options.get(setNr);
+  dispatch({ type: type });
 };
+
 export const gameSetOver = () => (dispatch) => {
   dispatch({ type: GAME_SET_OVER });
   dispatch({ type: CLEAR_GAME_SET_OVER });

@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
+import { connect } from "react-redux";
 import MobileList from "./MobileList";
 import List from "./List";
+import DarkModeToggle from "../../DarkModeToggle/DarkModeToggle";
 
-const Nav = () => {
+const Nav = ({ darkMode, setDarkMode, gameBegun }) => {
   const [mobile, setMobile] = useState(false);
 
   const onClick = () => {
     setMobile(!mobile);
   };
-  return (
+  return gameBegun ? (
+    <Fragment></Fragment>
+  ) : (
     <nav className="navbar">
       <div className="navbar-logo">
         <img
@@ -36,8 +40,12 @@ const Nav = () => {
       <div className="navbar-nav">
         <List />
       </div>
+      <DarkModeToggle darkMode={darkMode} setDarkMode={setDarkMode} />
     </nav>
   );
 };
+const mapStateToProps = (state) => ({
+  gameBegun: state.gameSettings.gameBegun,
+});
 
-export default Nav;
+export default connect(mapStateToProps, {})(Nav);

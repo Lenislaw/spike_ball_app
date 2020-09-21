@@ -18,3 +18,4 @@ export const NEW_GAME = "NEW_GAME";
 export const SAVE_STATS_TOTAL = "SAVE_STATS_TOTAL";
 export const SET_ALERT = "SET_ALERT";
 export const CLEAR_ALERT = "CLEAR_ALERT";
+export const FLIP_TRUE = "FLIP_TRUE";

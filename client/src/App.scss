@@ -14,6 +14,7 @@ $color-react: #5ed4f3;
 $color-node: #3c873a;
 $color-mongo: #569134;
 $color-grey-main: #999;
+$color-grey-inDarkMode: #b3b3b3;
 $coin-size: 260px;
 
 body {
@@ -26,10 +27,13 @@ body {
   min-height: 100vh;
   font-family: "Roboto", sans-serif;
   overflow: hidden;
+  position: relative;
 
   .navbar {
     position: relative;
     z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
     &-logo {
       position: absolute;
       width: 50px;
@@ -69,14 +73,14 @@ body {
       &-mobile {
         color: white;
         position: absolute;
-        left: 50%;
+        right: 0px;
         margin-top: 1rem;
         font-size: 3rem;
         transform: translate(-50%);
         cursor: pointer;
         &-side {
           position: absolute;
-          left: 100%;
+          right: -300%;
           transition: all 0.4s ease-in;
           margin-top: 82px;
           width: 100vw;
@@ -86,11 +90,12 @@ body {
           justify-content: center;
 
           &.slide {
-            left: 0;
+            right: 0;
             transition: all 0.4s ease-in;
           }
           .list-mobile {
             display: flex;
+
             flex-direction: column;
             padding: 0;
             height: 100%;
@@ -116,6 +121,7 @@ body {
     max-width: 1100px;
     margin: 82px auto;
     min-height: calc(100vh-82px);
+    margin-top: 2rem;
     .about {
       text-align: center;
       &-image {
@@ -196,6 +202,7 @@ body {
         height: 500px;
         z-index: 1;
         border-radius: 5px;
+
         .swiper-button {
           &-prev,
           &-next {
@@ -210,37 +217,40 @@ body {
       }
       &-accordions {
         padding-right: 1rem;
-        .list {
-          list-style: none;
-          .item {
-            padding-left: 1.3rem;
-            &:before {
-              font-family: "Font Awesome 5 Free";
-              font-weight: 900;
-              content: "\f45f";
-              margin-left: 3px;
-              display: inline-block;
-              background: #fff;
-              width: 31px;
-              height: 31px;
 
-              align-items: center;
-              justify-content: center;
-            }
-          }
-          &-list {
+        .accordion {
+          .list {
             list-style: none;
             .item {
               padding-left: 1.3rem;
               &:before {
                 font-family: "Font Awesome 5 Free";
                 font-weight: 900;
-                content: "\f140";
+                content: "\f45f";
                 margin-left: 3px;
                 display: inline-block;
                 background: #fff;
                 width: 31px;
                 height: 31px;
+
+                align-items: center;
+                justify-content: center;
+              }
+            }
+            &-list {
+              list-style: none;
+              .item {
+                padding-left: 1.3rem;
+                &:before {
+                  font-family: "Font Awesome 5 Free";
+                  font-weight: 900;
+                  content: "\f140";
+                  margin-left: 3px;
+                  display: inline-block;
+                  background: #fff;
+                  width: 31px;
+                  height: 31px;
+                }
               }
             }
           }
@@ -253,10 +263,7 @@ body {
       .swiper-slide {
         text-align: center;
         font-size: 18px;
-        background: #fff;
-
-        /* Center slide text vertically */
-
+        background: white;
         display: flex;
 
         .step {
@@ -286,6 +293,7 @@ body {
     }
     .spikeball-counter {
       &-logo {
+        padding-top: 2rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -644,6 +652,23 @@ body {
             }
           }
         }
+        .new-game {
+          padding: 2rem;
+          display: flex;
+          justify-content: center;
+          &-btn {
+            padding: 1rem 1.5rem;
+            width: 250px;
+            border: none;
+            outline: none;
+            display: block;
+            margin: 0 auto;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: $color-yellow-main;
+            font-weight: bold;
+          }
+        }
       }
       &-results {
         .results-game {
@@ -908,6 +933,10 @@ body {
     .container {
       border-top: 3px solid $color-yellow-main;
       border-radius: 5px;
+      .swiper-slide {
+        background: $color-grey-inDarkMode;
+        color: $color-black-main;
+      }
     }
     .spikeball-counter {
       &-logo {
@@ -962,6 +991,27 @@ body {
       padding: 0.2rem;
       outline: none;
       border: none;
+    }
+    .rules {
+      &-accordions {
+        .accordion {
+          background: $color-grey-inDarkMode;
+          .list {
+            .item {
+              &:before {
+                background: $color-grey-inDarkMode;
+              }
+            }
+            &-list {
+              .item {
+                &:before {
+                  background: $color-grey-inDarkMode;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
   &.light-mode {
@@ -1062,6 +1112,11 @@ body {
         display: block;
         &-mobile {
           display: none;
+          &-side {
+            .list-mobile {
+              display: none;
+            }
+          }
         }
       }
     }

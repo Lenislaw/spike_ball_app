@@ -13,6 +13,7 @@ import {
   GAME_SAVE_SET_SIX,
   GAME_SAVE_SET_SEVEN,
   SET_BALL_POSSESSION,
+  FLIP_TRUE,
 } from "../actions/types";
 
 const initialState = {
@@ -29,6 +30,7 @@ const initialState = {
   setSeven: null,
   gameStats: null,
   matchOver: false,
+  coinFliped: false,
   won: {
     teamOne: false,
     teamTwo: false,
@@ -49,8 +51,12 @@ export default function (state = initialState, action) {
         ...state,
         gameRounds: [payload],
       };
+    case FLIP_TRUE:
+      return {
+        ...state,
+        coinFliped: true,
+      };
     case SET_BALL_POSSESSION:
-      console.log("PAYLOAD", payload);
       return {
         ...state,
         ballPossession: payload,
@@ -137,6 +143,7 @@ export default function (state = initialState, action) {
         gameSaveSets: [],
         matchOver: false,
         setNr: 1,
+        coinFliped: false,
         won: {
           teamOne: false,
           teamTwo: false,

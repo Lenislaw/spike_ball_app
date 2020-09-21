@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
   setGameRounds,
@@ -13,6 +13,7 @@ import ButtonAfterFaul from "./ButtonAfterFaul";
 import PointsBoard from "./Points";
 import ChangeServers from "./ChangeServers";
 import Rounds from "./Rounds";
+import NewGame from "../results/NewGame";
 
 const Game = ({
   teamOne,
@@ -26,6 +27,7 @@ const Game = ({
   gameSetOver,
   saveSet,
   gameOver,
+  coinFliped,
 }) => {
   // ballPossession state
   const [ballPossession, setBallPossession] = useState({
@@ -181,7 +183,7 @@ const Game = ({
 
         whoGetPoint(whoGetPointId, "one");
         setPoints({ ...points, teamOnePoints: ++points.teamOnePoints });
- 
+
         whoGetPointId === 1 || whoGetPointId === 2
           ? setGetPoint({
               teamOne: { point: true, afterMiss: false },
@@ -459,7 +461,7 @@ const Game = ({
     />
   ) : (
     <div className="spikeball-counter-game">
-      <Modal />
+      {!coinFliped && <Modal />}
       <PointsBoard points={points} set={set} />
       <div className="controllers">
         <div className="controllers-team-one">
@@ -507,6 +509,7 @@ const Game = ({
       <div className="rounds">
         <Rounds gameRounds={gameRounds} />
       </div>
+      <NewGame />
     </div>
   );
 };
@@ -520,6 +523,7 @@ const mapStateToProps = (state) => ({
   gameRounds: state.game.gameRounds,
   gameSetOver: state.game.gameSetOver,
   setNr: state.game.setNr,
+  coinFliped: state.game.coinFliped,
 });
 export default connect(mapStateToProps, {
   setGameRounds,

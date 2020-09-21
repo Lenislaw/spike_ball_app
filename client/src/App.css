@@ -1,18 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
 .toggle-container {
-  width: 45px;
+  width: 100vw;
+  max-width: 45px;
   height: 45px;
-  position: fixed;
-  right: 20px;
+  position: absolute;
+  right: 50%;
   top: 18px;
   border-radius: 50%;
   overflow: hidden;
+  -webkit-transform: translate(50%);
+          transform: translate(50%);
   z-index: 4;
 }
 
 .toggle-container .toggle {
-  width: 100%;
-  height: 100%;
+  width: 45px;
+  height: 45px;
   border-radius: 50%;
 }
 
@@ -52,6 +55,13 @@
   outline: none;
 }
 
+@media (min-width: 767px) {
+  .toggle-container {
+    top: 16px;
+    right: 32px;
+  }
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -63,11 +73,14 @@ body {
   min-height: 100vh;
   font-family: "Roboto", sans-serif;
   overflow: hidden;
+  position: relative;
 }
 
 .App .navbar {
   position: relative;
   z-index: 2;
+  max-width: 1100px;
+  margin: 0 auto;
 }
 
 .App .navbar-logo {
@@ -130,7 +143,7 @@ body {
 .App .navbar-nav-mobile {
   color: white;
   position: absolute;
-  left: 50%;
+  right: 0px;
   margin-top: 1rem;
   font-size: 3rem;
   -webkit-transform: translate(-50%);
@@ -140,7 +153,7 @@ body {
 
 .App .navbar-nav-mobile-side {
   position: absolute;
-  left: 100%;
+  right: -300%;
   -webkit-transition: all 0.4s ease-in;
   transition: all 0.4s ease-in;
   margin-top: 82px;
@@ -158,7 +171,7 @@ body {
 }
 
 .App .navbar-nav-mobile-side.slide {
-  left: 0;
+  right: 0;
   -webkit-transition: all 0.4s ease-in;
   transition: all 0.4s ease-in;
 }
@@ -198,6 +211,7 @@ body {
   max-width: 1100px;
   margin: 82px auto;
   min-height: calc(100vh-82px);
+  margin-top: 2rem;
 }
 
 .App .container .about {
@@ -306,15 +320,15 @@ body {
   padding-right: 1rem;
 }
 
-.App .container .rules-accordions .list {
+.App .container .rules-accordions .accordion .list {
   list-style: none;
 }
 
-.App .container .rules-accordions .list .item {
+.App .container .rules-accordions .accordion .list .item {
   padding-left: 1.3rem;
 }
 
-.App .container .rules-accordions .list .item:before {
+.App .container .rules-accordions .accordion .list .item:before {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   content: "\f45f";
@@ -331,15 +345,15 @@ body {
           justify-content: center;
 }
 
-.App .container .rules-accordions .list-list {
+.App .container .rules-accordions .accordion .list-list {
   list-style: none;
 }
 
-.App .container .rules-accordions .list-list .item {
+.App .container .rules-accordions .accordion .list-list .item {
   padding-left: 1.3rem;
 }
 
-.App .container .rules-accordions .list-list .item:before {
+.App .container .rules-accordions .accordion .list-list .item:before {
   font-family: "Font Awesome 5 Free";
   font-weight: 900;
   content: "\f140";
@@ -357,8 +371,7 @@ body {
 .App .container .rules .swiper-slide {
   text-align: center;
   font-size: 18px;
-  background: #fff;
-  /* Center slide text vertically */
+  background: white;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -392,6 +405,7 @@ body {
 }
 
 .App .container .spikeball-counter-logo {
+  padding-top: 2rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -938,6 +952,29 @@ body {
   background: #082263;
 }
 
+.App .container .spikeball-counter-game .new-game {
+  padding: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.App .container .spikeball-counter-game .new-game-btn {
+  padding: 1rem 1.5rem;
+  width: 250px;
+  border: none;
+  outline: none;
+  display: block;
+  margin: 0 auto;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #fbd429;
+  font-weight: bold;
+}
+
 .App .container .spikeball-counter-results .results-game {
   text-align: center;
 }
@@ -1296,6 +1333,11 @@ body {
   border-radius: 5px;
 }
 
+.App.dark-mode .container .swiper-slide {
+  background: #b3b3b3;
+  color: #020202;
+}
+
 .App.dark-mode .spikeball-counter-logo {
   height: 220px;
   background: url(./img/sb_logo_counter_darkmode.png);
@@ -1344,6 +1386,18 @@ body {
   padding: 0.2rem;
   outline: none;
   border: none;
+}
+
+.App.dark-mode .rules-accordions .accordion {
+  background: #b3b3b3;
+}
+
+.App.dark-mode .rules-accordions .accordion .list .item:before {
+  background: #b3b3b3;
+}
+
+.App.dark-mode .rules-accordions .accordion .list-list .item:before {
+  background: #b3b3b3;
 }
 
 .App.light-mode {
@@ -1433,6 +1487,9 @@ body {
     display: block;
   }
   .App .navbar-nav-mobile {
+    display: none;
+  }
+  .App .navbar-nav-mobile-side .list-mobile {
     display: none;
   }
   .App .container {
