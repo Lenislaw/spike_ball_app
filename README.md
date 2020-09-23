@@ -20,6 +20,11 @@ Application created with passion for programming and playing spikeball. The main
 
 ### Getting started
 
+Check LIVE DEMO https://infinite-everglades-07168.herokuapp.com/about-app
+
+OR
+
+Clone Repo
 Install node_modules
 
 \$ npm install
